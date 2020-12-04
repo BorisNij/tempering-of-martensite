@@ -1,6 +1,7 @@
 package com.kovsky.bn;
 
-import com.kovsky.bn.commands.*;
+import com.kovsky.bn.commands.CommandProvider;
+import com.kovsky.bn.commands.SpotifyExplorerCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,97 +10,51 @@ import java.util.Objects;
 @SuppressWarnings("rawtypes")
 public class Controller {
     private final UserConsole view;
-    private final AuthService authService;
-    private final ApiService apiService;
-
-    private final Map<String, SpotifyExplorerCommand> commandMap;
-
-    private final Map<String, Cache> itemCaches;
+    private final CommandProvider commandProvider;
 
     public Controller(UserConsole view, AuthService authService, ApiService apiService) {
+        Map<String, Cache> itemCaches = new HashMap<>();
+        itemCaches.put("nowShowing", new Cache(view.itemsPerPage()));
+        this.commandProvider = new CommandProvider(view, authService, apiService, itemCaches);
         this.view = Objects.requireNonNull(view);
-        this.authService = Objects.requireNonNull(authService);
-        this.apiService = Objects.requireNonNull(apiService);
-
-        this.commandMap = new HashMap<>();
-        this.itemCaches = new HashMap<>();
-
-        this.itemCaches.put("nowShowing", new Cache(this.view.itemsPerPage()));
     }
 
     public void start() {
         this.view.display("Greetings! :)");
         this.view.display("This is your Spotify Explorer");
-        SpotifyExplorerCommand invalidCommand = new InvalidCommand(this.view);
         SpotifyExplorerCommand command;
 
         while (true) {
             String commandString = this.view.getCommand();
-            String[] userCommands = commandString
-                    .split(" ");
 
-            switch (userCommands[0].toLowerCase()) {
+            switch (commandString.toLowerCase()
+                    .split(" ")[0]) {
                 case "auth":
-                    if (this.commandMap.get("auth") != null) {
-                        command = this.commandMap.get("auth");
-                    } else {
-                        command = new AuthCommand(this.authService, this.view);
-                        this.commandMap.put("auth", command);
-                    }
+                    command = commandProvider.provideAuthCommand();
                     break;
 
                 case "new":
-                    if (this.commandMap.get("new") != null) {
-                        command = this.commandMap.get("new");
-                    } else {
-                        command = new NewAlbumsCommand(this.authService, this.apiService, this.view, this.itemCaches);
-                        this.commandMap.put("new", command);
-                    }
+                    command = commandProvider.provideNewAlbumsCommand();
                     break;
 
                 case "featured":
-                    if (this.commandMap.get("featured") != null) {
-                        command = this.commandMap.get("featured");
-                    } else {
-                        command = new FeaturedPlaylistsCommand(this.authService, this.apiService, this.view, this.itemCaches);
-                        this.commandMap.put("featured", command);
-                    }
+                    command = commandProvider.provideFeaturedPlaylistsCommand();
                     break;
 
                 case "categories":
-                    if (this.commandMap.get("categories") != null) {
-                        command = this.commandMap.get("categories");
-                    } else {
-                        command = new CategoriesCommand(this.authService, this.apiService, this.view, this.itemCaches);
-                        this.commandMap.put("categories", command);
-                    }
+                    command = commandProvider.provideCategoriesCommand();
                     break;
 
                 case "playlists":
-                    if (this.commandMap.get(commandString) != null) {
-                        command = this.commandMap.get(commandString);
-                    } else {
-                        command = new CategoryPlaylistsCommand(this.authService, this.apiService, this.view, this.itemCaches, commandString);
-                        this.commandMap.put(commandString, command);
-                    }
+                    command = commandProvider.provideCategoryPlaylistsCommand(commandString);
                     break;
 
                 case "next":
-                    if (this.commandMap.get("next") != null) {
-                        command = this.commandMap.get("next");
-                    } else {
-                        command = new NextPageCommand(this.authService, this.view, this.itemCaches);
-                        this.commandMap.put("next", command);
-                    }
+                    command = commandProvider.provideNextPageCommand();
                     break;
 
                 case "prev":
-                    if (this.commandMap.get("prev") != null) {
-                        command = this.commandMap.get("prev");
-                    } else {
-                        command = new PrevPageCommand(this.authService, this.view, this.itemCaches);
-                        this.commandMap.put("prev", command);
-                    }
+                    command = commandProvider.providePrevPageCommand();
                     break;
 
                 case "exit":
@@ -107,7 +62,7 @@ public class Controller {
                     return;
 
                 default:
-                    command = invalidCommand;
+                    command = commandProvider.provideInvalidCommand();
             }
             command.execute();
 

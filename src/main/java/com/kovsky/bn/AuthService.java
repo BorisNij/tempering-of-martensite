@@ -20,6 +20,7 @@ public class AuthService {
     private static final String CLIENT_ID = "8acb3fc9c0b7438eb583e7fce44f819a";
     private static final String CLIENT_SECRET = "23df0fbc957340e59733190b8d8acc53";
     private static final String AUTH_HOST = "accounts.spotify.com";
+
     private String accessToken = "";
     private String accessCode = "";
     private HttpServer server;
@@ -47,7 +48,7 @@ public class AuthService {
 
     public boolean manageToGetAccessCode() {
         Semaphore s = new Semaphore(0);
-        final AccessTokenHolder accessTokenHolder = new AccessTokenHolder();
+        final AccessCodeHolder accessCodeHolder = new AccessCodeHolder();
 
         server.createContext("/", exchange -> {
             try {
@@ -55,11 +56,11 @@ public class AuthService {
                         .getQuery();
                 String status;
                 if (query != null && query.contains("code=")) {
-                    accessTokenHolder.token = query.substring(5);
+                    accessCodeHolder.aCode = query.substring(5);
                     status = "Got the code. Return back to your program.";
                 } else {
                     status = "Not found authorization code. Try again.";
-                    accessTokenHolder.token = null;
+                    accessCodeHolder.aCode = null;
                 }
                 exchange.sendResponseHeaders(200, status.length());
                 exchange.getResponseBody()
@@ -76,7 +77,7 @@ public class AuthService {
         } catch (Exception e) {
             return false;
         }
-        this.accessCode = accessTokenHolder.token;
+        this.accessCode = accessCodeHolder.aCode;
         return true;
     }
 
@@ -143,7 +144,7 @@ public class AuthService {
                + "&response_type=code";
     }
 
-    private static class AccessTokenHolder {
-        private volatile String token = null;
+    private static class AccessCodeHolder {
+        private volatile String aCode = null;
     }
 }
