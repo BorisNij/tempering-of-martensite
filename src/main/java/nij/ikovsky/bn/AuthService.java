@@ -1,4 +1,4 @@
-package com.kovsky.bn;
+package nij.ikovsky.bn;
 
 import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpServer;

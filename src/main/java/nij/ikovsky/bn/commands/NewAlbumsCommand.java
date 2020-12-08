@@ -1,10 +1,10 @@
-package com.kovsky.bn.commands;
+package nij.ikovsky.bn.commands;
 
-import com.kovsky.bn.ApiService;
-import com.kovsky.bn.AuthService;
-import com.kovsky.bn.Cache;
-import com.kovsky.bn.UserConsole;
-import com.kovsky.bn.model.Album;
+import nij.ikovsky.bn.ApiService;
+import nij.ikovsky.bn.AuthService;
+import nij.ikovsky.bn.Cache;
+import nij.ikovsky.bn.UserConsole;
+import nij.ikovsky.bn.model.Album;
 
 import java.util.Map;
 

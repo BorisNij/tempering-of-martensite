@@ -1,6 +1,6 @@
-package com.kovsky.bn;
+package nij.ikovsky.bn;
 
-import com.kovsky.bn.model.MusicItem;
+import nij.ikovsky.bn.model.MusicItem;
 
 import java.util.ArrayList;
 import java.util.Collections;

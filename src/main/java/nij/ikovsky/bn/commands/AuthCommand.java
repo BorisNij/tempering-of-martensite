@@ -1,7 +1,7 @@
-package com.kovsky.bn.commands;
+package nij.ikovsky.bn.commands;
 
-import com.kovsky.bn.AuthService;
-import com.kovsky.bn.UserConsole;
+import nij.ikovsky.bn.AuthService;
+import nij.ikovsky.bn.UserConsole;
 
 public class AuthCommand implements SpotifyExplorerCommand {
 

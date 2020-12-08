@@ -1,4 +1,4 @@
-package com.kovsky.bn.model;
+package nij.ikovsky.bn.model;
 
 public class Category implements MusicItem {
 

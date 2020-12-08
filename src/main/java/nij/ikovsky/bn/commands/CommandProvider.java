@@ -1,9 +1,9 @@
-package com.kovsky.bn.commands;
+package nij.ikovsky.bn.commands;
 
-import com.kovsky.bn.ApiService;
-import com.kovsky.bn.AuthService;
-import com.kovsky.bn.Cache;
-import com.kovsky.bn.UserConsole;
+import nij.ikovsky.bn.ApiService;
+import nij.ikovsky.bn.AuthService;
+import nij.ikovsky.bn.Cache;
+import nij.ikovsky.bn.UserConsole;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,12 +97,6 @@ public class CommandProvider {
     }
 
     public SpotifyExplorerCommand provideInvalidCommand() {
-        if (this.commandMap.get("invalidCommand") != null) {
-            command = this.commandMap.get("invalidCommand");
-        } else {
-            command = new InvalidCommand(this.view);
-            this.commandMap.put("invalidCommand", command);
-        }
-        return command;
+        return () -> this.view.errorMsg("Invalid command. Please try again.");
     }
 }

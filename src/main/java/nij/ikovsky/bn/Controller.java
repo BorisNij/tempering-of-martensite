@@ -1,7 +1,7 @@
-package com.kovsky.bn;
+package nij.ikovsky.bn;
 
-import com.kovsky.bn.commands.CommandProvider;
-import com.kovsky.bn.commands.SpotifyExplorerCommand;
+import nij.ikovsky.bn.commands.CommandProvider;
+import nij.ikovsky.bn.commands.SpotifyExplorerCommand;
 
 import java.util.HashMap;
 import java.util.Map;

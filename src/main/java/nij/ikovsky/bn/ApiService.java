@@ -1,11 +1,11 @@
-package com.kovsky.bn;
+package nij.ikovsky.bn;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.kovsky.bn.model.Album;
-import com.kovsky.bn.model.Category;
-import com.kovsky.bn.model.Playlist;
+import nij.ikovsky.bn.model.Album;
+import nij.ikovsky.bn.model.Category;
+import nij.ikovsky.bn.model.Playlist;
 
 import java.io.IOException;
 import java.net.URI;

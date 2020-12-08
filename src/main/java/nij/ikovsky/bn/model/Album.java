@@ -1,4 +1,4 @@
-package com.kovsky.bn.model;
+package nij.ikovsky.bn.model;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.kovsky.bn;
+package nij.ikovsky.bn;
 
 public class Main {
     public static void main(String[] args) {
