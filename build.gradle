@@ -2,6 +2,7 @@ buildscript {
     ext {
         junitVersion = '5.7.0' as Object
         gsonVersion = '2.8.6' as Object
+        mockitoVersion = '3.6.28' as Object
     }
 }
 
@@ -22,5 +23,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitVersion}"
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testCompile group: 'org.mockito', name: 'mockito-core', version: "${mockitoVersion}"
+
 
 }
