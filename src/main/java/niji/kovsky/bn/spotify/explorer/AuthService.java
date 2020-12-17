@@ -15,11 +15,13 @@ import java.util.concurrent.TimeUnit;
 
 public class AuthService {
 
+    private static final String SCHEME = "https://";
+    private static final String AUTH_HOST = "accounts.spotify.com";
+    private static final String TOKEN_PATH = "/api/token";
     private static final int PORT = 9090;
     private static final String REDIRECT_URI = "http://localhost" + ":" + PORT;
     private static final String CLIENT_ID = "8acb3fc9c0b7438eb583e7fce44f819a";
     private static final String CLIENT_SECRET = "23df0fbc957340e59733190b8d8acc53";
-    private static final String AUTH_HOST = "accounts.spotify.com";
 
     private String accessToken = "";
     private String accessCode = "";
@@ -90,31 +92,32 @@ public class AuthService {
             return false;
         }
 
-        HttpClient client = HttpClient.newBuilder()
-                .build();
+        String uri = SCHEME + AUTH_HOST + TOKEN_PATH;
+
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-type", "application/x-www-form-urlencoded")
-                .uri(URI.create("https://" +
-                                AUTH_HOST + "/api/token"))
+                .uri(URI.create(uri))
                 .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + CLIENT_ID
                                                           + "&client_secret=" + CLIENT_SECRET
                                                           + "&grant_type=authorization_code"
                                                           + "&code=" + accessCode
                                                           + "&redirect_uri=" + REDIRECT_URI))
                 .build();
-        String responseBody;
+        HttpClient client = HttpClient.newBuilder()
+                .build();
+        String response;
         try {
-            responseBody = client.send(request, HttpResponse.BodyHandlers.ofString())
+            response = client.send(request, HttpResponse.BodyHandlers.ofString())
                     .body();
         } catch (IOException | InterruptedException e) {
             return false;
         }
 
-        if (responseBody == null) {
+        if (response == null) {
             return false;
         }
 
-        String parsedAccessToken = JsonParser.parseString(responseBody)
+        String parsedAccessToken = JsonParser.parseString(response)
                 .getAsJsonObject()
                 .get("access_token")
                 .getAsString();
