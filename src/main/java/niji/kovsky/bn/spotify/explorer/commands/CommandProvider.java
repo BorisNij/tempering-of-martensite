@@ -1,9 +1,9 @@
-package nij.ikovsky.bn.commands;
+package niji.kovsky.bn.spotify.explorer.commands;
 
-import nij.ikovsky.bn.ApiService;
-import nij.ikovsky.bn.AuthService;
-import nij.ikovsky.bn.Cache;
-import nij.ikovsky.bn.UserConsole;
+import niji.kovsky.bn.spotify.explorer.ApiService;
+import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.Cache;
+import niji.kovsky.bn.spotify.explorer.UserConsole;
 
 import java.util.HashMap;
 import java.util.Map;

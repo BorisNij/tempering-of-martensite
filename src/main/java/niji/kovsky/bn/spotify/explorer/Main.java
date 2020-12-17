@@ -1,4 +1,4 @@
-package nij.ikovsky.bn;
+package niji.kovsky.bn.spotify.explorer;
 
 public class Main {
     public static void main(String[] args) {

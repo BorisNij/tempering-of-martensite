@@ -1,4 +1,4 @@
-package nij.ikovsky.bn;
+package niji.kovsky.bn.spotify.explorer;
 
 import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpServer;

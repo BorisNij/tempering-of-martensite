@@ -1,7 +1,7 @@
-package nij.ikovsky.bn;
+package niji.kovsky.bn.spotify.explorer;
 
-import nij.ikovsky.bn.model.Album;
-import nij.ikovsky.bn.model.MusicItem;
+import niji.kovsky.bn.spotify.explorer.model.Album;
+import niji.kovsky.bn.spotify.explorer.model.MusicItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package nij.ikovsky.bn;
+package niji.kovsky.bn.spotify.explorer;
 
-import nij.ikovsky.bn.model.MusicItem;
+import niji.kovsky.bn.spotify.explorer.model.MusicItem;
 
 import java.util.ArrayList;
 import java.util.Collections;

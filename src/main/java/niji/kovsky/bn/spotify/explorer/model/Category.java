@@ -1,4 +1,4 @@
-package nij.ikovsky.bn.model;
+package niji.kovsky.bn.spotify.explorer.model;
 
 public class Category implements MusicItem {
 

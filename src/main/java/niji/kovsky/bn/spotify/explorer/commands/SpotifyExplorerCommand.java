@@ -1,4 +1,4 @@
-package nij.ikovsky.bn.commands;
+package niji.kovsky.bn.spotify.explorer.commands;
 
 @FunctionalInterface
 public interface SpotifyExplorerCommand {

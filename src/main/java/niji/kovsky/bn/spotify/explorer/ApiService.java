@@ -1,11 +1,11 @@
-package nij.ikovsky.bn;
+package niji.kovsky.bn.spotify.explorer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import nij.ikovsky.bn.model.Album;
-import nij.ikovsky.bn.model.Category;
-import nij.ikovsky.bn.model.Playlist;
+import niji.kovsky.bn.spotify.explorer.model.Album;
+import niji.kovsky.bn.spotify.explorer.model.Category;
+import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
 import java.io.IOException;
 import java.net.URI;
