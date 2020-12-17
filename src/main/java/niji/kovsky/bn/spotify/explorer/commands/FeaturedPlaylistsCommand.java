@@ -27,16 +27,17 @@ public class FeaturedPlaylistsCommand implements SpotifyExplorerCommand {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void execute() {
         if (this.authService.isAuthorized()) {
             if (this.itemCaches.get("featured")
                     .getItems()
                     .isEmpty()) {
+                //noinspection unchecked
                 this.itemCaches.get("featured")
                         .setItems(this.apiService.getPlaylists(this.authService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get("featured"));
+            //noinspection unchecked
             this.view.display(this.itemCaches.get("nowShowing")
                                       .currentPage());
         } else {

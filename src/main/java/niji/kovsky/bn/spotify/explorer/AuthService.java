@@ -1,6 +1,5 @@
 package niji.kovsky.bn.spotify.explorer;
 
-import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpServer;
 
 import java.awt.*;
@@ -23,9 +22,14 @@ public class AuthService {
     private static final String CLIENT_ID = "8acb3fc9c0b7438eb583e7fce44f819a";
     private static final String CLIENT_SECRET = "23df0fbc957340e59733190b8d8acc53";
 
+    private final ApiResponseParser<String> responseParser;
     private String accessToken = "";
     private String accessCode = "";
     private HttpServer server;
+
+    public AuthService(ApiResponseParser<String> responseParser) {
+        this.responseParser = responseParser;
+    }
 
     public boolean startListeningForAccessCode() {
         try {
@@ -88,7 +92,7 @@ public class AuthService {
     }
 
     public boolean manageToGetAccessToken() {
-        if (accessCode == null || accessCode.isEmpty()) {
+        if (accessCode == null || accessCode.isBlank()) {
             return false;
         }
 
@@ -103,32 +107,27 @@ public class AuthService {
                                                           + "&code=" + accessCode
                                                           + "&redirect_uri=" + REDIRECT_URI))
                 .build();
-        HttpClient client = HttpClient.newBuilder()
-                .build();
-        String response;
+
         try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString())
-                    .body();
-        } catch (IOException | InterruptedException e) {
-            return false;
-        }
+            HttpClient client = HttpClient.newBuilder()
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response == null) {
-            return false;
-        }
+            assert response != null;
+            String parsedAccessToken = this.responseParser.parseAccessToken(response.body());
+            assert parsedAccessToken != null;
 
-        String parsedAccessToken = JsonParser.parseString(response)
-                .getAsJsonObject()
-                .get("access_token")
-                .getAsString();
+            if (parsedAccessToken.toLowerCase()
+                        .contains("error") || parsedAccessToken.isBlank()) {
+                throw new AssertionError();
+            }
+            this.accessToken = parsedAccessToken;
 
-        if (parsedAccessToken == null || parsedAccessToken.toLowerCase()
-                .contains("error") || parsedAccessToken.isBlank()) {
+        } catch (IOException | InterruptedException | AssertionError e) {
             this.accessToken = null;
             return false;
         }
 
-        this.accessToken = parsedAccessToken;
         return true;
     }
 

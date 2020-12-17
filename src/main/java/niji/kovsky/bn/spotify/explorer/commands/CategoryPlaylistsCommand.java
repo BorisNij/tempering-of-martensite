@@ -9,15 +9,15 @@ import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")
 public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
     private final AuthService authService;
     private final ApiService apiService;
     private final UserConsole view;
     private final String commandString;
+    @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public CategoryPlaylistsCommand(AuthService authService, ApiService apiService, UserConsole view, Map<String, Cache> itemCaches, String commandString) {
+    public CategoryPlaylistsCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches, String commandString) {
         this.authService = authService;
         this.apiService = apiService;
         this.view = view;
@@ -30,13 +30,13 @@ public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void execute() {
         if (this.authService.isAuthorized()) {
             if (this.itemCaches.get(commandString)
                     .getItems()
                     .isEmpty()) {
 
+                //noinspection unchecked
                 final Cache<Category> categoryCache = this.itemCaches.get("categories");
                 final String soughtCategory = commandString.substring(commandString.indexOf(' ') + 1);
                 Category category = categoryCache.getByName(soughtCategory);
@@ -46,10 +46,12 @@ public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
                     return;
                 }
 
+                //noinspection unchecked
                 this.itemCaches.get(commandString)
                         .setItems(this.apiService.getPlaylists(category, this.authService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get(commandString));
+            //noinspection unchecked
             this.view.display(this.itemCaches.get("nowShowing")
                                       .currentPage());
         } else {

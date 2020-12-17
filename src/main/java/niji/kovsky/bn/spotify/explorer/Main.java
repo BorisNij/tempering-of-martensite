@@ -4,8 +4,9 @@ public class Main {
     public static void main(String[] args) {
 
         UserConsole view = new UserConsole(5);
-        AuthService authService = new AuthService();
-        ApiService apiService = new ApiService();
+        ApiResponseParser<String> responseParser = new JsonStringResponseParserImpl();
+        AuthService authService = new AuthService(responseParser);
+        ApiService apiService = new ApiService(responseParser);
 
         new Controller(view, authService, apiService).start();
 

@@ -8,14 +8,14 @@ import niji.kovsky.bn.spotify.explorer.model.Album;
 
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")
 public class NewAlbumsCommand implements SpotifyExplorerCommand {
     private final AuthService authService;
     private final ApiService apiService;
     private final UserConsole view;
+    @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public NewAlbumsCommand(AuthService authService, ApiService apiService, UserConsole view, Map<String, Cache> itemCaches) {
+    public NewAlbumsCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
         this.authService = authService;
         this.apiService = apiService;
         this.view = view;

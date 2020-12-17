@@ -9,14 +9,14 @@ import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")
 public class CategoriesCommand implements SpotifyExplorerCommand {
     private final AuthService authService;
     private final ApiService apiService;
     private final UserConsole view;
+    @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public CategoriesCommand(AuthService authService, ApiService apiService, UserConsole view, Map<String, Cache> itemCaches) {
+    public CategoriesCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
         this.authService = authService;
         this.apiService = apiService;
         this.view = view;
@@ -28,16 +28,17 @@ public class CategoriesCommand implements SpotifyExplorerCommand {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void execute() {
         if (this.authService.isAuthorized()) {
             if (this.itemCaches.get("categories")
                     .getItems()
                     .isEmpty()) {
+                //noinspection unchecked
                 this.itemCaches.get("categories")
                         .setItems(this.apiService.getCategories(this.authService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get("categories"));
+            //noinspection unchecked
             this.view.display(this.itemCaches.get("nowShowing")
                                       .currentPage());
         } else {

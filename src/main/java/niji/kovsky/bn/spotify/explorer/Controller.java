@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@SuppressWarnings("rawtypes")
 public class Controller {
     private final UserConsole view;
     private final CommandProvider commandProvider;
 
     public Controller(UserConsole view, AuthService authService, ApiService apiService) {
+        //noinspection rawtypes
         Map<String, Cache> itemCaches = new HashMap<>();
+        //noinspection rawtypes
         itemCaches.put("nowShowing", new Cache(view.itemsPerPage()));
         this.commandProvider = new CommandProvider(view, authService, apiService, itemCaches);
         this.view = Objects.requireNonNull(view);

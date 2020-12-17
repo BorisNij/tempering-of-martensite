@@ -8,17 +8,17 @@ import niji.kovsky.bn.spotify.explorer.UserConsole;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")
 public class CommandProvider {
     private final UserConsole view;
     private final AuthService authService;
     private final ApiService apiService;
+    @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
     private final Map<String, SpotifyExplorerCommand> commandMap;
     private SpotifyExplorerCommand command;
 
-    public CommandProvider(UserConsole view, AuthService authService, ApiService apiService, Map<String, Cache> itemCaches) {
+    public CommandProvider(UserConsole view, AuthService authService, ApiService apiService, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
         this.view = view;
         this.authService = authService;
         this.apiService = apiService;
