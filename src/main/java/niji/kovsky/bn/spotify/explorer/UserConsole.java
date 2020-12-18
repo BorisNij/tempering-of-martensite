@@ -6,13 +6,11 @@ import java.util.Scanner;
 
 public class UserConsole implements AutoCloseable {
 
-    private static final String EOL;
     private static final Scanner scanner;
     private final int itemsPerPage;
 
     static {
         scanner = new Scanner(System.in);
-        EOL = System.getProperty("line.separator");
     }
 
     public UserConsole(int itemsPerPage) {
@@ -46,15 +44,11 @@ public class UserConsole implements AutoCloseable {
 
     public void errorMsg(String errorMsg) {
         System.err.println("ERROR: " + errorMsg);
-        try {
-            Thread.sleep(0, 10);
-        } catch (InterruptedException ignored) {
-        }
     }
 
     public String getCommand() {
-        System.out.print(EOL +
-                         "> ");
+        System.out.println();
+        System.out.print("> ");
         return scanner.nextLine();
     }
 
