@@ -7,6 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Processes user command-strings received via the View into {@link SpotifyExplorerCommand} objects.
+ * Passes the View, Service and music item {@code Cache} objects
+ * to the {@code SpotifyExplorerCommand} as arguments. Executes the {@code SpotifyExplorerCommand}
+ * that corresponds to the user command-string.<p>
+ * <p>
+ * nstantiates and maintains the following objects:
+ * <ul>
+ *     <li> A hash map of (Album, Category or Playlist) music item Caches</li>
+ *     <li> A <i>now-showing</i> Cache entry in the hash map holding the cache that currently
+ *          presents its items to the user. The {@link niji.kovsky.bn.spotify.explorer.commands.NextPageCommand} and
+ *          {@link niji.kovsky.bn.spotify.explorer.commands.PrevPageCommand} update the {@code Page} of this cache</li>
+ *     <li> A {@link CommandProvider}</li>
+ * </ul>
+ */
 public class Controller {
     private final UserConsole view;
     private final CommandProvider commandProvider;
@@ -26,39 +41,39 @@ public class Controller {
         SpotifyExplorerCommand command;
 
         while (true) {
-            String commandString = this.view.getCommand();
+            String commandString = this.view.getUserCommandString();
 
-            switch (commandString.toLowerCase()
+            switch (commandString.toUpperCase()
                     .split(" ")[0]) {
-                case "auth":
+                case "AUTH":
                     command = commandProvider.provideAuthCommand();
                     break;
 
-                case "new":
+                case "NEW":
                     command = commandProvider.provideNewAlbumsCommand();
                     break;
 
-                case "featured":
+                case "FEATURED":
                     command = commandProvider.provideFeaturedPlaylistsCommand();
                     break;
 
-                case "categories":
+                case "CATEGORIES":
                     command = commandProvider.provideCategoriesCommand();
                     break;
 
-                case "playlists":
+                case "PLAYLISTS":
                     command = commandProvider.provideCategoryPlaylistsCommand(commandString);
                     break;
 
-                case "next":
+                case "NEXT":
                     command = commandProvider.provideNextPageCommand();
                     break;
 
-                case "prev":
+                case "PREV":
                     command = commandProvider.providePrevPageCommand();
                     break;
 
-                case "exit":
+                case "EXIT":
                     this.view.display("Terminating...");
                     return;
 

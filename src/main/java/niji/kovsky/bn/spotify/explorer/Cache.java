@@ -7,6 +7,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Holds a list of objects implementing the {@link MusicItem} interface.
+ * Allows producing a sub-list of these objects, namely an object Page
+ * with a predefined number of items per page. Provides methods for scrolling
+ * back and forth the original list ({@link #prevPage()} and {@link #nextPage()}).<p>
+ * <p>
+ * The list is populated with Albums, Categories or Playlists
+ * (via the {@link #setItems(List) setItems(List) method} in the corresponding Command - <br>
+ * {@link niji.kovsky.bn.spotify.explorer.commands.NewAlbumsCommand}, <br>
+ * {@link niji.kovsky.bn.spotify.explorer.commands.CategoriesCommand}, <br>
+ * {@link niji.kovsky.bn.spotify.explorer.commands.FeaturedPlaylistsCommand} and <br>
+ * {@link niji.kovsky.bn.spotify.explorer.commands.CategoryPlaylistsCommand}
+ *
+ * @param <T> bound by Album, Category or Playlist types.
+ */
 public class Cache<T extends MusicItem> {
 
     // shared empty Page instance used for empty instances

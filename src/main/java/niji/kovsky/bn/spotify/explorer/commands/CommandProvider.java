@@ -8,6 +8,11 @@ import niji.kovsky.bn.spotify.explorer.UserConsole;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Gets a {@link SpotifyExplorerCommand} from a dedicated hash map, or produces a new
+ * {@link SpotifyExplorerCommand} and puts in the hash map if the {@code Command} was
+ * called for the first time.
+ */
 public class CommandProvider {
     private final UserConsole view;
     private final AuthService authService;

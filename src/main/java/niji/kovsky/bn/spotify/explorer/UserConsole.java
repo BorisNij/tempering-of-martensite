@@ -4,6 +4,13 @@ import niji.kovsky.bn.spotify.explorer.model.MusicItem;
 
 import java.util.Scanner;
 
+/**
+ * Serves as a passive View based on {@code System.in} and {@code System.out}.
+ * Using {@code System.in}, receives user actions as command strings.
+ * Using {@code System.out}, outputs messages and a sub-list of pre-cached
+ * music items (i.e. item Page) to the user. Using {@code System.err},
+ * outputs error messages to the user.
+ */
 public class UserConsole implements AutoCloseable {
 
     private static final Scanner scanner;
@@ -46,7 +53,7 @@ public class UserConsole implements AutoCloseable {
         System.err.println("ERROR: " + errorMsg);
     }
 
-    public String getCommand() {
+    public String getUserCommandString() {
         System.out.println();
         System.out.print("> ");
         return scanner.nextLine();

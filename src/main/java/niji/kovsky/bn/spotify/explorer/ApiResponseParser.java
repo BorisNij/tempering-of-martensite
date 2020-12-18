@@ -6,6 +6,12 @@ import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
 import java.util.List;
 
+/**
+ * Stipulates parsing and deserialization of Spotify api responses into lists of POJOs or
+ * an Access Token string. Implemented by {@link JsonStringResponseParserImpl}.
+ *
+ * @param <T> api response type
+ */
 public interface ApiResponseParser<T> {
 
     List<Album> parseNewAlbums(T newAlbumsResponseBody);

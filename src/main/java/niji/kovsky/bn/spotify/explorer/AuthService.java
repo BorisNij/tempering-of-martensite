@@ -12,8 +12,27 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Manages authorization through Spotify's OAuth 2.0 endpoint to get an Access Token.
+ * Follows a five-step process (see {@link niji.kovsky.bn.spotify.explorer.commands.AuthCommand} class
+ * for the actual execution sequence):
+ * <ol>
+ *     <li> Starts an {@link HttpServer} and begins listening for Access Code</li>
+ *     <li> Attempts to send the default browser of the user to Spotify's OAuth endpoint ({@link #manageToSendDefaultBrowserToAuthUri()}),
+ *     <li> OAuth presents the user with an "Authorize access" or "Cancel" choice</li>
+ *     <li> Spotify redirects the user's browser to a redirect uri, and if the user chooses
+ *          "Authorizes access", Spotify sends back an Access Code</li>
+ *     <li> Issues a <i>POST</i> {@link HttpRequest} with the Access Code and client credentials
+ *          in its body to request an Access Token </li>
+ * </ol>
+ * Uses an {@link ApiResponseParser} to parse the JSON response from Spotify and extract the Access Token.
+ * Provides accessor methods for the Access Token ({@link #getAccessToken()}) and also for the auth uri
+ * ({@link #authUri()}) for the case the user needs to point his browser there by himself
+ * (if {@link #manageToSendDefaultBrowserToAuthUri()} method fails).
+ */
 public class AuthService {
 
+    //TODO: move properties to Resources
     private static final String SCHEME = "https://";
     private static final String AUTH_HOST = "accounts.spotify.com";
     private static final String TOKEN_PATH = "/api/token";

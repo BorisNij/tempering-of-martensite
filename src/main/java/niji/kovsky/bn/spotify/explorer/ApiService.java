@@ -12,8 +12,20 @@ import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Consumes Spotify's REST api to fetch music items using a pre-obtained Access Token.
+ * Uses an {@link HttpClient} to send a <i>GET</i> {@link HttpRequest} to Spotify api
+ * with the Access Token in the request header, receives a JSON string from Spotify
+ * ({@link #getJson(String, String)} method). <p>
+ * <p>
+ * Uses an {@link ApiResponseParser} to parse the received JSON string and
+ * produce a list of music items (i.e. list of {@link Album}, list of {@link Category}
+ * list of {@link Playlist} objects. Each {@code public} method returns an unmodifiable
+ * view of such a list.<p>
+ */
 public class ApiService {
 
+    //TODO: move properties to Resources
     private static final String SCHEME = "https://";
     private static final String API_HOST = "api.spotify.com";
     private static final String CATEGORIES_PATH = "/v1/browse/categories";

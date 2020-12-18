@@ -10,6 +10,10 @@ import niji.kovsky.bn.spotify.explorer.model.Playlist;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Parses JSON strings to produce the Access Token or to generate a list of {@link niji.kovsky.bn.spotify.explorer.model.MusicItem}.
+ * Uses the {@link com.google.gson} library for parsing.
+ */
 public class JsonStringResponseParserImpl implements ApiResponseParser<String> {
     @Override
     public List<Album> parseNewAlbums(String newAlbumsJson) {
