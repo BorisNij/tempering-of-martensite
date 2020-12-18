@@ -83,10 +83,9 @@ public class ApiService {
                     .build();
             HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            assert response != null;
             return response.body();
 
-        } catch (InterruptedException | IOException | AssertionError e) {
+        } catch (InterruptedException | IOException | NullPointerException e) {
             return null;
         }
     }

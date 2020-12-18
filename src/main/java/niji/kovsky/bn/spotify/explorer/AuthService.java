@@ -98,6 +98,7 @@ public class AuthService {
         });
 
         try {
+            //noinspection ResultOfMethodCallIgnored
             s.tryAcquire(1, TimeUnit.MINUTES);
         } catch (Exception e) {
             return false;
@@ -132,17 +133,15 @@ public class AuthService {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            assert response != null;
             String parsedAccessToken = this.responseParser.parseAccessToken(response.body());
-            assert parsedAccessToken != null;
 
             if (parsedAccessToken.toLowerCase()
                         .contains("error") || parsedAccessToken.isBlank()) {
-                throw new AssertionError();
+                throw new IOException();
             }
             this.accessToken = parsedAccessToken;
 
-        } catch (IOException | InterruptedException | AssertionError e) {
+        } catch (IOException | InterruptedException | NullPointerException e) {
             this.accessToken = null;
             return false;
         }
