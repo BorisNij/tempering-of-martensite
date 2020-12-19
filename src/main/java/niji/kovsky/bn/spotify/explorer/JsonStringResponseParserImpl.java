@@ -57,9 +57,9 @@ public class JsonStringResponseParserImpl implements ApiResponseParser<String> {
     }
 
     @Override
-    public List<Playlist> parsePlaylists(String playlistsJson, String parentCategory) {
+    public List<Playlist> parsePlaylists(String playlistsResponseBody, String parentCategory) {
         List<Playlist> featuredList = new ArrayList<>();
-        JsonArray playlists = getArrayFromJson(playlistsJson, "playlists");
+        JsonArray playlists = getArrayFromJson(playlistsResponseBody, "playlists");
 
         for (JsonElement ps : playlists) {
             String name = getElementAsString(ps, "name");

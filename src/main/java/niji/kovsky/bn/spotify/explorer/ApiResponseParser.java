@@ -18,7 +18,7 @@ public interface ApiResponseParser<T> {
 
     List<Category> parseCategories(T categoriesResponseBody);
 
-    List<Playlist> parsePlaylists(T featuredPlaylistsResponseBody, String parentCategory);
+    List<Playlist> parsePlaylists(T playlistsResponseBody, String parentCategory);
 
     String parseAccessToken(T tokenResponseBody);
 }
