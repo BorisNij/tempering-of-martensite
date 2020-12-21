@@ -1,4 +1,4 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
 /**
  * App entry point, instantiates the following objects:

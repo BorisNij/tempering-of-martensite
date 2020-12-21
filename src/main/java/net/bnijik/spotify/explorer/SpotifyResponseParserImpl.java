@@ -1,17 +1,18 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import niji.kovsky.bn.spotify.explorer.model.Album;
-import niji.kovsky.bn.spotify.explorer.model.Category;
-import niji.kovsky.bn.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.model.Album;
+import net.bnijik.spotify.explorer.model.Category;
+import net.bnijik.spotify.explorer.model.MusicItem;
+import net.bnijik.spotify.explorer.model.Playlist;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Parses JSON strings to produce the Access Token or to generate a list of {@link niji.kovsky.bn.spotify.explorer.model.MusicItem}.
+ * Parses JSON strings to produce the Access Token or to generate a list of {@link MusicItem}.
  * Uses the {@link com.google.gson} library for parsing.
  */
 public class SpotifyResponseParserImpl implements SpotifyResponseParser<String> {

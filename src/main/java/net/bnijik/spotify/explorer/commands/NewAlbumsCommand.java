@@ -1,10 +1,10 @@
-package niji.kovsky.bn.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
-import niji.kovsky.bn.spotify.explorer.Cache;
-import niji.kovsky.bn.spotify.explorer.MusicSpotifyService;
-import niji.kovsky.bn.spotify.explorer.UserConsole;
-import niji.kovsky.bn.spotify.explorer.model.Album;
+import net.bnijik.spotify.explorer.AuthSpotifyService;
+import net.bnijik.spotify.explorer.Cache;
+import net.bnijik.spotify.explorer.MusicSpotifyService;
+import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.model.Album;
 
 import java.util.Map;
 

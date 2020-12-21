@@ -1,7 +1,7 @@
-package niji.kovsky.bn.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
-import niji.kovsky.bn.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.AuthSpotifyService;
+import net.bnijik.spotify.explorer.UserConsole;
 
 public class AuthCommand implements SpotifyExplorerCommand {
 

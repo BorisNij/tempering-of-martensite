@@ -1,4 +1,4 @@
-package niji.kovsky.bn.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.commands;
 
 /**
  * A supertype of all {@code Command}s of this app. <br>

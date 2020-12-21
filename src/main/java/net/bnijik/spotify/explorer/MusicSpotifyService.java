@@ -1,8 +1,8 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
-import niji.kovsky.bn.spotify.explorer.model.Album;
-import niji.kovsky.bn.spotify.explorer.model.Category;
-import niji.kovsky.bn.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.model.Album;
+import net.bnijik.spotify.explorer.model.Category;
+import net.bnijik.spotify.explorer.model.Playlist;
 
 import java.io.IOException;
 import java.net.URI;

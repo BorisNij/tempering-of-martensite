@@ -1,6 +1,7 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
 import com.sun.net.httpserver.HttpServer;
+import net.bnijik.spotify.explorer.commands.AuthCommand;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Manages authorization through Spotify's OAuth 2.0 endpoint to get an Access Token.
- * Follows a five-step process (see {@link niji.kovsky.bn.spotify.explorer.commands.AuthCommand} class
+ * Follows a five-step process (see {@link AuthCommand} class
  * for the actual execution sequence):
  * <ol>
  *     <li> Starts an {@link HttpServer} and begins listening for Access Code</li>

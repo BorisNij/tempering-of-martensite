@@ -1,6 +1,10 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
-import niji.kovsky.bn.spotify.explorer.model.MusicItem;
+import net.bnijik.spotify.explorer.commands.CategoriesCommand;
+import net.bnijik.spotify.explorer.commands.CategoryPlaylistsCommand;
+import net.bnijik.spotify.explorer.commands.FeaturedPlaylistsCommand;
+import net.bnijik.spotify.explorer.commands.NewAlbumsCommand;
+import net.bnijik.spotify.explorer.model.MusicItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,10 +19,10 @@ import java.util.stream.Collectors;
  * <p>
  * The list is populated with Albums, Categories or Playlists
  * (via the {@link #setItems(List) setItems(List) method} in the corresponding Command - <br>
- * {@link niji.kovsky.bn.spotify.explorer.commands.NewAlbumsCommand}, <br>
- * {@link niji.kovsky.bn.spotify.explorer.commands.CategoriesCommand}, <br>
- * {@link niji.kovsky.bn.spotify.explorer.commands.FeaturedPlaylistsCommand} and <br>
- * {@link niji.kovsky.bn.spotify.explorer.commands.CategoryPlaylistsCommand}
+ * {@link NewAlbumsCommand}, <br>
+ * {@link CategoriesCommand}, <br>
+ * {@link FeaturedPlaylistsCommand} and <br>
+ * {@link CategoryPlaylistsCommand}
  *
  * @param <T> bound by Album, Category or Playlist types.
  */

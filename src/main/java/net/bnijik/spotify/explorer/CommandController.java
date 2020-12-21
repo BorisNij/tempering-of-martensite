@@ -1,7 +1,9 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
-import niji.kovsky.bn.spotify.explorer.commands.CommandProvider;
-import niji.kovsky.bn.spotify.explorer.commands.SpotifyExplorerCommand;
+import net.bnijik.spotify.explorer.commands.CommandProvider;
+import net.bnijik.spotify.explorer.commands.NextPageCommand;
+import net.bnijik.spotify.explorer.commands.PrevPageCommand;
+import net.bnijik.spotify.explorer.commands.SpotifyExplorerCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +19,8 @@ import java.util.Objects;
  * <ul>
  *     <li> A hash map of (Album, Category or Playlist) music item Caches</li>
  *     <li> A <i>now-showing</i> Cache entry in the hash map holding the cache that currently
- *          presents its items to the user. The {@link niji.kovsky.bn.spotify.explorer.commands.NextPageCommand} and
- *          {@link niji.kovsky.bn.spotify.explorer.commands.PrevPageCommand} update the {@code Page} of this cache</li>
+ *          presents its items to the user. The {@link NextPageCommand} and
+ *          {@link PrevPageCommand} update the {@code Page} of this cache</li>
  *     <li> A {@link CommandProvider}</li>
  * </ul>
  */

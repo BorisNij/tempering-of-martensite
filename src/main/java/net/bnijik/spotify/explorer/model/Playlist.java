@@ -1,4 +1,4 @@
-package niji.kovsky.bn.spotify.explorer.model;
+package net.bnijik.spotify.explorer.model;
 
 public class Playlist implements MusicItem {
 

@@ -1,6 +1,6 @@
-package niji.kovsky.bn.spotify.explorer;
+package net.bnijik.spotify.explorer;
 
-import niji.kovsky.bn.spotify.explorer.model.MusicItem;
+import net.bnijik.spotify.explorer.model.MusicItem;
 
 import java.util.Scanner;
 

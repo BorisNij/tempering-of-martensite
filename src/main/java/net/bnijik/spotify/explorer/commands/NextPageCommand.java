@@ -1,18 +1,18 @@
-package niji.kovsky.bn.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
-import niji.kovsky.bn.spotify.explorer.Cache;
-import niji.kovsky.bn.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.AuthSpotifyService;
+import net.bnijik.spotify.explorer.Cache;
+import net.bnijik.spotify.explorer.UserConsole;
 
 import java.util.Map;
 
-public class PrevPageCommand implements SpotifyExplorerCommand {
+public class NextPageCommand implements SpotifyExplorerCommand {
     private final AuthSpotifyService authSpotifyService;
     private final UserConsole view;
     @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public PrevPageCommand(AuthSpotifyService authSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+    public NextPageCommand(AuthSpotifyService authSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
         this.authSpotifyService = authSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
@@ -29,8 +29,7 @@ public class PrevPageCommand implements SpotifyExplorerCommand {
                 return;
             }
             //noinspection unchecked
-            this.view.display(this.itemCaches.get("nowShowing")
-                                      .prevPage());
+            this.view.display(nowShowing.nextPage());
         } else {
             this.view.display("Please authenticate with Spotify first ('auth')");
         }
