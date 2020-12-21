@@ -18,12 +18,12 @@ import java.util.List;
  * with the Access Token in the request header, receives a JSON string from Spotify
  * ({@link #getJson(String, String)} method). <p>
  * <p>
- * Uses an {@link ApiResponseParser} to parse the received JSON string and
+ * Uses an {@link SpotifyResponseParser} to parse the received JSON string and
  * produce a list of music items (i.e. list of {@link Album}, list of {@link Category}
  * list of {@link Playlist} objects. Each {@code public} method returns an unmodifiable
  * view of such a list.<p>
  */
-public class ApiService {
+public class MusicSpotifyService {
 
     //TODO: move properties to Resources
     private static final String SCHEME = "https://";
@@ -33,9 +33,9 @@ public class ApiService {
     private static final String FEATURED_PATH = "/v1/browse/featured-playlists";
     private static final String QUERY = "?limit=50";
 
-    private final ApiResponseParser<String> responseParser;
+    private final SpotifyResponseParser<String> responseParser;
 
-    public ApiService(ApiResponseParser<String> responseParser) {
+    public MusicSpotifyService(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }
 

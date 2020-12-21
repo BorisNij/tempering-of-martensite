@@ -13,7 +13,7 @@ import java.util.Objects;
  * to the {@code SpotifyExplorerCommand} as arguments. Executes the {@code SpotifyExplorerCommand}
  * that corresponds to the user command-string.<p>
  * <p>
- * nstantiates and maintains the following objects:
+ * Instantiates and maintains the following objects:
  * <ul>
  *     <li> A hash map of (Album, Category or Playlist) music item Caches</li>
  *     <li> A <i>now-showing</i> Cache entry in the hash map holding the cache that currently
@@ -22,16 +22,16 @@ import java.util.Objects;
  *     <li> A {@link CommandProvider}</li>
  * </ul>
  */
-public class Controller {
+public class CommandController {
     private final UserConsole view;
     private final CommandProvider commandProvider;
 
-    public Controller(UserConsole view, AuthService authService, ApiService apiService) {
+    public CommandController(UserConsole view, AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService) {
         //noinspection rawtypes
         Map<String, Cache> itemCaches = new HashMap<>();
         //noinspection rawtypes
         itemCaches.put("nowShowing", new Cache(view.itemsPerPage()));
-        this.commandProvider = new CommandProvider(view, authService, apiService, itemCaches);
+        this.commandProvider = new CommandProvider(view, authSpotifyService, musicSpotifyService, itemCaches);
         this.view = Objects.requireNonNull(view);
     }
 

@@ -1,24 +1,24 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
 
-import niji.kovsky.bn.spotify.explorer.ApiService;
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.Cache;
+import niji.kovsky.bn.spotify.explorer.MusicSpotifyService;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
 import java.util.Map;
 
 public class CategoriesCommand implements SpotifyExplorerCommand {
-    private final AuthService authService;
-    private final ApiService apiService;
+    private final AuthSpotifyService authSpotifyService;
+    private final MusicSpotifyService musicSpotifyService;
     private final UserConsole view;
     @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public CategoriesCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
-        this.authService = authService;
-        this.apiService = apiService;
+    public CategoriesCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+        this.authSpotifyService = authSpotifyService;
+        this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
 
@@ -29,13 +29,13 @@ public class CategoriesCommand implements SpotifyExplorerCommand {
 
     @Override
     public void execute() {
-        if (this.authService.isAuthorized()) {
+        if (this.authSpotifyService.isAuthorized()) {
             if (this.itemCaches.get("categories")
                     .getItems()
                     .isEmpty()) {
                 //noinspection unchecked
                 this.itemCaches.get("categories")
-                        .setItems(this.apiService.getCategories(this.authService.getAccessToken()));
+                        .setItems(this.musicSpotifyService.getCategories(this.authSpotifyService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get("categories"));
             //noinspection unchecked

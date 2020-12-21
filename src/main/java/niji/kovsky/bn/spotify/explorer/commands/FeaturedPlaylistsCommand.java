@@ -1,8 +1,8 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.ApiService;
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.Cache;
+import niji.kovsky.bn.spotify.explorer.MusicSpotifyService;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 import niji.kovsky.bn.spotify.explorer.model.Playlist;
 
@@ -10,14 +10,14 @@ import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 public class FeaturedPlaylistsCommand implements SpotifyExplorerCommand {
-    private final AuthService authService;
-    private final ApiService apiService;
+    private final AuthSpotifyService authSpotifyService;
+    private final MusicSpotifyService musicSpotifyService;
     private final UserConsole view;
     private final Map<String, Cache> itemCaches;
 
-    public FeaturedPlaylistsCommand(AuthService authService, ApiService apiService, UserConsole view, Map<String, Cache> itemCaches) {
-        this.authService = authService;
-        this.apiService = apiService;
+    public FeaturedPlaylistsCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, Map<String, Cache> itemCaches) {
+        this.authSpotifyService = authSpotifyService;
+        this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
 
@@ -28,13 +28,13 @@ public class FeaturedPlaylistsCommand implements SpotifyExplorerCommand {
 
     @Override
     public void execute() {
-        if (this.authService.isAuthorized()) {
+        if (this.authSpotifyService.isAuthorized()) {
             if (this.itemCaches.get("featured")
                     .getItems()
                     .isEmpty()) {
                 //noinspection unchecked
                 this.itemCaches.get("featured")
-                        .setItems(this.apiService.getPlaylists(this.authService.getAccessToken()));
+                        .setItems(this.musicSpotifyService.getPlaylists(this.authSpotifyService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get("featured"));
             //noinspection unchecked

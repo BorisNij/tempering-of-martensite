@@ -9,11 +9,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JsonStringResponseParserImplTest {
+class SpotifyResponseParserImplTest {
 
     @Test
     void parseNewAlbums() {
-        ApiResponseParser<String> jsonParser = new JsonStringResponseParserImpl();
+        SpotifyResponseParser<String> jsonParser = new SpotifyResponseParserImpl();
         String newAlbumsJson = "{\n" +
                                "  \"albums\" : {\n" +
                                "    \"href\" : \"https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=20\",\n" +
@@ -104,7 +104,7 @@ class JsonStringResponseParserImplTest {
 
     @Test
     void parseCategories() {
-        ApiResponseParser<String> jsonParser = new JsonStringResponseParserImpl();
+        SpotifyResponseParser<String> jsonParser = new SpotifyResponseParserImpl();
         String categoriesJson = "{\n" +
                                 "  \"categories\" : {\n" +
                                 "    \"href\" : \"https://api.spotify.com/v1/browse/categories?offset=0&limit=20\",\n" +
@@ -175,7 +175,7 @@ class JsonStringResponseParserImplTest {
 
     @Test
     void parsePlaylists() {
-        ApiResponseParser<String> jsonParser = new JsonStringResponseParserImpl();
+        SpotifyResponseParser<String> jsonParser = new SpotifyResponseParserImpl();
         String playlistsJson = "{\n" +
                                "  \"message\" : \"Monday morning music, coming right up!\",\n" +
                                "  \"playlists\" : {\n" +
@@ -261,7 +261,7 @@ class JsonStringResponseParserImplTest {
 
     @Test
     void parseAccessToken() {
-        ApiResponseParser<String> jsonParser = new JsonStringResponseParserImpl();
+        SpotifyResponseParser<String> jsonParser = new SpotifyResponseParserImpl();
         String accessTokenJson = "{\n" +
                                  "   \"access_token\": \"NgCXRK...MzYjw\",\n" +
                                  "   \"token_type\": \"Bearer\",\n" +

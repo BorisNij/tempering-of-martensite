@@ -1,26 +1,26 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.Cache;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 
 import java.util.Map;
 
 public class PrevPageCommand implements SpotifyExplorerCommand {
-    private final AuthService authService;
+    private final AuthSpotifyService authSpotifyService;
     private final UserConsole view;
     @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public PrevPageCommand(AuthService authService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
-        this.authService = authService;
+    public PrevPageCommand(AuthSpotifyService authSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+        this.authSpotifyService = authSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
     }
 
     @Override
     public void execute() {
-        if (this.authService.isAuthorized()) {
+        if (this.authSpotifyService.isAuthorized()) {
             @SuppressWarnings("rawtypes") final Cache nowShowing = this.itemCaches.get("nowShowing");
             if (nowShowing.getItems()
                     .isEmpty()) {

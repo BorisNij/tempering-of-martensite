@@ -25,12 +25,12 @@ import java.util.concurrent.TimeUnit;
  *     <li> Issues a <i>POST</i> {@link HttpRequest} with the Access Code and client credentials
  *          in its body to request an Access Token </li>
  * </ol>
- * Uses an {@link ApiResponseParser} to parse the JSON response from Spotify and extract the Access Token.
+ * Uses an {@link SpotifyResponseParser} to parse the JSON response from Spotify and extract the Access Token.
  * Provides accessor methods for the Access Token ({@link #getAccessToken()}) and also for the auth uri
  * ({@link #authUri()}) for the case the user needs to point his browser there by himself
  * (if {@link #manageToSendDefaultBrowserToAuthUri()} method fails).
  */
-public class AuthService {
+public class AuthSpotifyService {
 
     //TODO: move properties to Resources
     private static final String SCHEME = "https://";
@@ -41,12 +41,12 @@ public class AuthService {
     private static final String CLIENT_ID = "8acb3fc9c0b7438eb583e7fce44f819a";
     private static final String CLIENT_SECRET = "23df0fbc957340e59733190b8d8acc53";
 
-    private final ApiResponseParser<String> responseParser;
+    private final SpotifyResponseParser<String> responseParser;
     private String accessToken = "";
     private String accessCode = "";
     private HttpServer server;
 
-    public AuthService(ApiResponseParser<String> responseParser) {
+    public AuthSpotifyService(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }
 

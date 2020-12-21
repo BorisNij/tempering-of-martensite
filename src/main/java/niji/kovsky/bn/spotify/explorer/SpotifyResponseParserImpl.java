@@ -14,7 +14,7 @@ import java.util.List;
  * Parses JSON strings to produce the Access Token or to generate a list of {@link niji.kovsky.bn.spotify.explorer.model.MusicItem}.
  * Uses the {@link com.google.gson} library for parsing.
  */
-public class JsonStringResponseParserImpl implements ApiResponseParser<String> {
+public class SpotifyResponseParserImpl implements SpotifyResponseParser<String> {
     @Override
     public List<Album> parseNewAlbums(String newAlbumsJson) {
         if (newAlbumsJson == null) {

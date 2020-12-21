@@ -1,8 +1,8 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.ApiService;
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.Cache;
+import niji.kovsky.bn.spotify.explorer.MusicSpotifyService;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 import niji.kovsky.bn.spotify.explorer.model.Category;
 import niji.kovsky.bn.spotify.explorer.model.Playlist;
@@ -10,16 +10,16 @@ import niji.kovsky.bn.spotify.explorer.model.Playlist;
 import java.util.Map;
 
 public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
-    private final AuthService authService;
-    private final ApiService apiService;
+    private final AuthSpotifyService authSpotifyService;
+    private final MusicSpotifyService musicSpotifyService;
     private final UserConsole view;
     private final String commandString;
     @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public CategoryPlaylistsCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches, String commandString) {
-        this.authService = authService;
-        this.apiService = apiService;
+    public CategoryPlaylistsCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches, String commandString) {
+        this.authSpotifyService = authSpotifyService;
+        this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.commandString = commandString;
         this.itemCaches = itemCaches;
@@ -31,7 +31,7 @@ public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
 
     @Override
     public void execute() {
-        if (this.authService.isAuthorized()) {
+        if (this.authSpotifyService.isAuthorized()) {
             if (this.itemCaches.get(commandString)
                     .getItems()
                     .isEmpty()) {
@@ -48,7 +48,7 @@ public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
 
                 //noinspection unchecked
                 this.itemCaches.get(commandString)
-                        .setItems(this.apiService.getPlaylists(category, this.authService.getAccessToken()));
+                        .setItems(this.musicSpotifyService.getPlaylists(category, this.authSpotifyService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get(commandString));
             //noinspection unchecked

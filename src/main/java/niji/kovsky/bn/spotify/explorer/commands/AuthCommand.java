@@ -1,15 +1,15 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 
 public class AuthCommand implements SpotifyExplorerCommand {
 
-    private final AuthService authService;
+    private final AuthSpotifyService authSpotifyService;
     private final UserConsole view;
 
-    public AuthCommand(AuthService authService, UserConsole view) {
-        this.authService = authService;
+    public AuthCommand(AuthSpotifyService authSpotifyService, UserConsole view) {
+        this.authSpotifyService = authSpotifyService;
         this.view = view;
     }
 
@@ -27,7 +27,7 @@ public class AuthCommand implements SpotifyExplorerCommand {
     }
 
     private void tryGettingAccessToken() {
-        if (!authService.manageToGetAccessToken()) {
+        if (!authSpotifyService.manageToGetAccessToken()) {
             this.view.errorMsg("Failed to get Access Token");
         } else {
             this.view.display("Access Token received successfully." + "\n" +
@@ -36,24 +36,24 @@ public class AuthCommand implements SpotifyExplorerCommand {
     }
 
     private void tryGettingAccessCode() {
-        if (!authService.manageToGetAccessCode()) {
+        if (!authSpotifyService.manageToGetAccessCode()) {
             this.view.errorMsg("Failed to get Access Code");
         } else {
-            this.authService.stopListeningForAccessCode();
+            this.authSpotifyService.stopListeningForAccessCode();
             this.view.display("Access Code received successfully.");
         }
     }
 
     private void trySendingDefaultBrowserToAuthUri() {
-        if (!authService.manageToSendDefaultBrowserToAuthUri()) {
+        if (!authSpotifyService.manageToSendDefaultBrowserToAuthUri()) {
             this.view.errorMsg("Failed to start default browser.");
             this.view.errorMsg("Use this link to request Access Code:");
-            this.view.display(this.authService.authUri());
+            this.view.display(this.authSpotifyService.authUri());
         }
     }
 
     private void tryStartListeningForAccessCode() {
-        if (!authService.startListeningForAccessCode()) {
+        if (!authSpotifyService.startListeningForAccessCode()) {
             this.view.errorMsg("Failed to start server, cannot begin listening for Access Code");
         }
     }

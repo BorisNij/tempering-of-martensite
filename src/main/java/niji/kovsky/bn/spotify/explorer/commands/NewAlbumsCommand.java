@@ -1,23 +1,23 @@
 package niji.kovsky.bn.spotify.explorer.commands;
 
-import niji.kovsky.bn.spotify.explorer.ApiService;
-import niji.kovsky.bn.spotify.explorer.AuthService;
+import niji.kovsky.bn.spotify.explorer.AuthSpotifyService;
 import niji.kovsky.bn.spotify.explorer.Cache;
+import niji.kovsky.bn.spotify.explorer.MusicSpotifyService;
 import niji.kovsky.bn.spotify.explorer.UserConsole;
 import niji.kovsky.bn.spotify.explorer.model.Album;
 
 import java.util.Map;
 
 public class NewAlbumsCommand implements SpotifyExplorerCommand {
-    private final AuthService authService;
-    private final ApiService apiService;
+    private final AuthSpotifyService authSpotifyService;
+    private final MusicSpotifyService musicSpotifyService;
     private final UserConsole view;
     @SuppressWarnings("rawtypes")
     private final Map<String, Cache> itemCaches;
 
-    public NewAlbumsCommand(AuthService authService, ApiService apiService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
-        this.authService = authService;
-        this.apiService = apiService;
+    public NewAlbumsCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+        this.authSpotifyService = authSpotifyService;
+        this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
 
@@ -29,12 +29,12 @@ public class NewAlbumsCommand implements SpotifyExplorerCommand {
     @Override
     @SuppressWarnings("unchecked")
     public void execute() {
-        if (this.authService.isAuthorized()) {
+        if (this.authSpotifyService.isAuthorized()) {
             if (this.itemCaches.get("new")
                     .getItems()
                     .isEmpty()) {
                 this.itemCaches.get("new")
-                        .setItems(this.apiService.getNewAlbums(this.authService.getAccessToken()));
+                        .setItems(this.musicSpotifyService.getNewAlbums(this.authSpotifyService.getAccessToken()));
             }
             this.itemCaches.put("nowShowing", this.itemCaches.get("new"));
             this.view.display(this.itemCaches.get("nowShowing")
