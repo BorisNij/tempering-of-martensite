@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 class CacheTest<T extends MusicItem> {
 
@@ -17,9 +16,9 @@ class CacheTest<T extends MusicItem> {
     @DisplayName("pageOf() should produce a Page instance preloaded with specified item list")
     void pageOf_ShouldProduceAPageInstancePreloadedWithSpecifiedItems() {
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
         final Cache.Page<T> musicItemPage = Cache.pageOf(
-                List.of(tItem, tItem),
+                List.of(musicItem, musicItem),
                 1,
                 1);
 
@@ -32,8 +31,9 @@ class CacheTest<T extends MusicItem> {
     @Test
     @DisplayName("pageOf() should return null on invalid input or on null input")
     void pageOf_shouldReturnNullOnInvalidInputOrOnNullInput() {
-        @SuppressWarnings("unchecked") final T tItem = (T) mock(MusicItem.class);
-        final List<T> tItems = List.of(tItem, tItem);
+        //noinspection unchecked
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
+        final List<T> tItems = List.of(musicItem, musicItem);
         assertAll(
                 () -> assertNull(Cache.pageOf(null, 2, 2)),
                 () -> assertNull(Cache.pageOf(tItems, 0, 1)),
@@ -49,7 +49,7 @@ class CacheTest<T extends MusicItem> {
         final List<T> emptyListOfT = Collections.emptyList();
         final Cache.Page<T> expectedEmptyPage = Cache.pageOf(emptyListOfT, 1, 2);
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
                   () -> assertNotNull(expectedEmptyPage.list()),
@@ -59,7 +59,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem))
         );
     }
 
@@ -67,8 +67,8 @@ class CacheTest<T extends MusicItem> {
     @DisplayName("pageOf() should return empty unmodifiable Page instance if supplied pageNum is > lastPage")
     void pageOf_ShouldReturnEmptyPageIfSuppliedPageNumSmallerThanLastPage() {
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
-        final List<T> tItems = List.of(tItem, tItem);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
+        final List<T> tItems = List.of(musicItem, musicItem);
         final Cache.Page<T> expectedEmptyPage = Cache.pageOf(tItems, 3, 2);
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
@@ -79,7 +79,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem))
         );
     }
 
@@ -87,7 +87,7 @@ class CacheTest<T extends MusicItem> {
     @DisplayName("emptyPage() should return an empty unmodifiable Page instance")
     void emptyPage_ShouldReturnEmptyPage() {
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
         final Cache.Page<T> expectedEmptyPage = Cache.emptyPage();
         assertAll(() -> assertNotNull(expectedEmptyPage),
                   // () -> assertTrue(musicItemPage instanceof Cache.Page),
@@ -96,7 +96,7 @@ class CacheTest<T extends MusicItem> {
                                            .isEmpty()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem)));
+                                             .add(musicItem)));
     }
 
     @Test
@@ -232,7 +232,7 @@ class CacheTest<T extends MusicItem> {
         Cache<T> cache = new Cache<>(3);
         Cache.Page<T> expectedEmptyPage = cache.currentPage();
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
                   () -> assertNotNull(expectedEmptyPage.list()),
@@ -242,7 +242,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem))
         );
     }
 
@@ -300,14 +300,12 @@ class CacheTest<T extends MusicItem> {
     @DisplayName("nextPage() should return empty unmodifiable instance of Page if called after last Page")
     void nextPage_ShouldReturnEmptyUnmodifiableInstanceOfPageIfCalledAfterLastPage() {
         //noinspection unchecked
-        final T album1 = (T) new Album("name1", "a1", "http");
+        final T musicItem1 = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
         //noinspection unchecked
-        final T album2 = (T) new Album("name2", "b1, b2", "http");
-        //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem2 = (T) new Album("album2", "[artist_a2]", "https://url.of.a2");
 
         Cache<T> cache = new Cache<>(3);
-        cache.setItems(List.of(album1, album2));
+        cache.setItems(List.of(musicItem1, musicItem2));
         cache.nextPage();
         Cache.Page<T> expectedEmptyPage = cache.nextPage();
 
@@ -319,7 +317,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem1))
         );
     }
 
@@ -329,7 +327,7 @@ class CacheTest<T extends MusicItem> {
         Cache<T> cache = new Cache<>(3);
         Cache.Page<T> expectedEmptyPage = cache.nextPage();
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
                   () -> assertNotNull(expectedEmptyPage.list()),
@@ -339,7 +337,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem))
         );
     }
 
@@ -347,14 +345,12 @@ class CacheTest<T extends MusicItem> {
     @DisplayName("prevPage() should return empty unmodifiable instance of Page if called on first Page")
     void prevPage_ShouldReturnEmptyUnmodifiableInstanceOfPageIfCalledOnFirstPage() {
         //noinspection unchecked
-        final T album1 = (T) new Album("name1", "a1", "http");
+        final T musicItem1 = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
         //noinspection unchecked
-        final T album2 = (T) new Album("name2", "b1, b2", "http");
-        //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem2 = (T) new Album("album2", "[artist_a2]", "https://url.of.a2");
 
         Cache<T> cache = new Cache<>(3);
-        cache.setItems(List.of(album1, album2));
+        cache.setItems(List.of(musicItem1, musicItem2));
         Cache.Page<T> expectedEmptyPage = cache.prevPage();
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
@@ -365,7 +361,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem1))
         );
     }
 
@@ -402,7 +398,7 @@ class CacheTest<T extends MusicItem> {
         Cache<T> cache = new Cache<>(3);
         Cache.Page<T> expectedEmptyPage = cache.prevPage();
         //noinspection unchecked
-        final T tItem = (T) mock(MusicItem.class);
+        final T musicItem = (T) new Album("album1", "[artist_a1, artist_a2]", "https://url.of.a1");
 
         assertAll(() -> assertNotNull(expectedEmptyPage),
                   () -> assertNotNull(expectedEmptyPage.list()),
@@ -412,7 +408,7 @@ class CacheTest<T extends MusicItem> {
                   () -> assertEquals(1, expectedEmptyPage.lastPage()),
                   () -> assertThrows(UnsupportedOperationException.class,
                                      () -> expectedEmptyPage.list()
-                                             .add(tItem))
+                                             .add(musicItem))
         );
     }
 }
