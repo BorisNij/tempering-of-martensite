@@ -7,6 +7,7 @@ import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.MusicItem;
 import net.bnijik.spotify.explorer.model.Playlist;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * Parses JSON strings to produce the Access Token or to generate a list of {@link MusicItem}.
  * Uses the {@link com.google.gson} library for parsing.
  */
+@Component("jsonParser")
 public class SpotifyResponseParserImpl implements SpotifyResponseParser<String> {
     @Override
     public List<Album> parseNewAlbums(String newAlbumsJson) {

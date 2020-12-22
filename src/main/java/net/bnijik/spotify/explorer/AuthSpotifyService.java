@@ -2,6 +2,8 @@ package net.bnijik.spotify.explorer;
 
 import com.sun.net.httpserver.HttpServer;
 import net.bnijik.spotify.explorer.commands.AuthCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.io.IOException;
@@ -31,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  * ({@link #authUri()}) for the case the user needs to point his browser there by himself
  * (if {@link #manageToSendDefaultBrowserToAuthUri()} method fails).
  */
+@Component
 public class AuthSpotifyService {
 
     //TODO: move properties to Resources
@@ -47,6 +50,7 @@ public class AuthSpotifyService {
     private String accessCode = "";
     private HttpServer server;
 
+    @Autowired
     public AuthSpotifyService(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }

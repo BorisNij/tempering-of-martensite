@@ -3,6 +3,8 @@ package net.bnijik.spotify.explorer;
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.List;
  * list of {@link Playlist} objects. Each {@code public} method returns an unmodifiable
  * view of such a list.<p>
  */
+@Component
 public class MusicSpotifyService {
 
     //TODO: move properties to Resources
@@ -35,6 +38,7 @@ public class MusicSpotifyService {
 
     private final SpotifyResponseParser<String> responseParser;
 
+    @Autowired
     public MusicSpotifyService(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }

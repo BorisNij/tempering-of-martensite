@@ -1,5 +1,8 @@
 package net.bnijik.spotify.explorer;
 
+import net.bnijik.spotify.explorer.configuration.SpringConfiguration;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 /**
  * App entry point, instantiates the following objects:
  * <ul>
@@ -17,12 +20,12 @@ package net.bnijik.spotify.explorer;
 public class SpotifyExplorer {
     public static void main(String[] args) {
 
-        UserConsole view = new UserConsole(5);
-        SpotifyResponseParser<String> responseParser = new SpotifyResponseParserImpl();
-        AuthSpotifyService authSpotifyService = new AuthSpotifyService(responseParser);
-        MusicSpotifyService musicSpotifyService = new MusicSpotifyService(responseParser);
+        AnnotationConfigApplicationContext context;
+        context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 
-        new CommandController(view, authSpotifyService, musicSpotifyService).start();
+        UserConsole view = context.getBean(UserConsole.class);
+        CommandController controller = context.getBean(CommandController.class);
+        controller.start();
 
         view.close();
         view.display("Bye bye!");

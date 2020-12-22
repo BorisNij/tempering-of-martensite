@@ -1,6 +1,8 @@
 package net.bnijik.spotify.explorer;
 
 import net.bnijik.spotify.explorer.model.MusicItem;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
@@ -11,6 +13,7 @@ import java.util.Scanner;
  * music items (i.e. item Page) to the user. Using {@code System.err},
  * outputs error messages to the user.
  */
+@Component
 public class UserConsole implements AutoCloseable {
 
     private static final Scanner scanner;
@@ -20,7 +23,7 @@ public class UserConsole implements AutoCloseable {
         scanner = new Scanner(System.in);
     }
 
-    public UserConsole(int itemsPerPage) {
+    public UserConsole(@Value("${app.items-per-page}") int itemsPerPage) {
         this.itemsPerPage = itemsPerPage;
     }
 

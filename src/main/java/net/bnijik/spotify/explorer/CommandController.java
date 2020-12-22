@@ -4,6 +4,8 @@ import net.bnijik.spotify.explorer.commands.CommandProvider;
 import net.bnijik.spotify.explorer.commands.NextPageCommand;
 import net.bnijik.spotify.explorer.commands.PrevPageCommand;
 import net.bnijik.spotify.explorer.commands.SpotifyExplorerCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +26,12 @@ import java.util.Objects;
  *     <li> A {@link CommandProvider}</li>
  * </ul>
  */
+@Component
 public class CommandController {
     private final UserConsole view;
     private final CommandProvider commandProvider;
 
+    @Autowired
     public CommandController(UserConsole view, AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService) {
         //noinspection rawtypes
         Map<String, Cache> itemCaches = new HashMap<>();
@@ -46,7 +50,7 @@ public class CommandController {
             String commandString = this.view.getUserCommandString();
 
             switch (commandString.toUpperCase()
-                    .split(" ")[0]) {
+                    .split("\\s")[0]) {
                 case "AUTH":
                     command = commandProvider.provideAuthCommand();
                     break;
