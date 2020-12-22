@@ -1,0 +1,22 @@
+app:
+  items-per-page: 5
+
+server:
+  port: 9090
+  context-path: /
+
+spotify:
+
+  auth:
+    client-id: 8acb3fc9c0b7438eb583e7fce44f819a
+    client-secret: 23df0fbc957340e59733190b8d8acc53
+    auth-uri: https://accounts.spotify.com
+    redirect-uri: http://localhost
+    token-path: /api/token
+
+  music:
+    base-uri: https://api.spotify.com/v1
+    categories-path: /browse/categories
+    new-albums-path: /browse/new-releases
+    featured-path: /browse/featured-playlists
+    query: ?limit=50
