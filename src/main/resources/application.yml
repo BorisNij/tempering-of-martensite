@@ -10,8 +10,8 @@ spotify:
   auth:
     client-id: 8acb3fc9c0b7438eb583e7fce44f819a
     client-secret: 23df0fbc957340e59733190b8d8acc53
-    auth-uri: https://accounts.spotify.com
-    redirect-uri: http://localhost
+    base-uri: https://accounts.spotify.com
+    redirect-base-uri: http://localhost
     token-path: /api/token
 
   music:

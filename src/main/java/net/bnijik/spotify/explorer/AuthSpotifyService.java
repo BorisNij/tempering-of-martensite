@@ -3,7 +3,8 @@ package net.bnijik.spotify.explorer;
 import com.sun.net.httpserver.HttpServer;
 import net.bnijik.spotify.explorer.commands.AuthCommand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.io.IOException;
@@ -33,17 +34,23 @@ import java.util.concurrent.TimeUnit;
  * ({@link #authUri()}) for the case the user needs to point his browser there by himself
  * (if {@link #manageToSendDefaultBrowserToAuthUri()} method fails).
  */
-@Component
+@Service
 public class AuthSpotifyService {
 
-    //TODO: move properties to Resources
-    private static final String SCHEME = "https://";
-    private static final String AUTH_HOST = "accounts.spotify.com";
-    private static final String TOKEN_PATH = "/api/token";
-    private static final int PORT = 9090;
-    private static final String REDIRECT_URI = "http://localhost" + ":" + PORT;
-    private static final String CLIENT_ID = "8acb3fc9c0b7438eb583e7fce44f819a";
-    private static final String CLIENT_SECRET = "23df0fbc957340e59733190b8d8acc53";
+    @Value("${spotify.auth.base-uri}")
+    private String baseUri;
+    @Value("${spotify.auth.token-path}")
+    private String tokenPath;
+    @Value("${server.port}")
+    private int port;
+    @Value("${spotify.auth.redirect-base-uri}")
+    private String redirectBaseUri;
+    @Value("${spotify.auth.client-id}")
+    private String clientId;
+    @Value("${spotify.auth.client-secret}")
+    private String clientSecret;
+    @Value("${server.context-path}")
+    private String contextPath;
 
     private final SpotifyResponseParser<String> responseParser;
     private String accessToken = "";
@@ -58,7 +65,7 @@ public class AuthSpotifyService {
     public boolean startListeningForAccessCode() {
         try {
             server = HttpServer.create();
-            server.bind(new InetSocketAddress(PORT), 0);
+            server.bind(new InetSocketAddress(port), 0);
             server.start();
         } catch (Exception e) {
             return false;
@@ -80,7 +87,7 @@ public class AuthSpotifyService {
         Semaphore s = new Semaphore(0);
         final AccessCodeHolder accessCodeHolder = new AccessCodeHolder();
 
-        server.createContext("/", exchange -> {
+        server.createContext(this.contextPath, exchange -> {
             try {
                 String query = exchange.getRequestURI()
                         .getQuery();
@@ -121,16 +128,16 @@ public class AuthSpotifyService {
             return false;
         }
 
-        String uri = SCHEME + AUTH_HOST + TOKEN_PATH;
+        String uri = baseUri + tokenPath;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-type", "application/x-www-form-urlencoded")
                 .uri(URI.create(uri))
-                .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + CLIENT_ID
-                                                          + "&client_secret=" + CLIENT_SECRET
+                .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + clientId
+                                                          + "&client_secret=" + clientSecret
                                                           + "&grant_type=authorization_code"
                                                           + "&code=" + accessCode
-                                                          + "&redirect_uri=" + REDIRECT_URI))
+                                                          + "&redirect_uri=" + redirectBaseUri + ":" + port))
                 .build();
 
         try {
@@ -163,9 +170,9 @@ public class AuthSpotifyService {
     }
 
     public String authUri() {
-        return "https://" + AUTH_HOST
-               + "/authorize?client_id=" + CLIENT_ID
-               + "&redirect_uri=" + REDIRECT_URI
+        return this.baseUri
+               + "/authorize?client_id=" + clientId
+               + "&redirect_uri=" + redirectBaseUri + ":" + port
                + "&response_type=code";
     }
 

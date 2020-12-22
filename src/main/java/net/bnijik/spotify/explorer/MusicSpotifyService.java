@@ -4,7 +4,8 @@ import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -25,16 +26,19 @@ import java.util.List;
  * list of {@link Playlist} objects. Each {@code public} method returns an unmodifiable
  * view of such a list.<p>
  */
-@Component
+@Service
 public class MusicSpotifyService {
 
-    //TODO: move properties to Resources
-    private static final String SCHEME = "https://";
-    private static final String API_HOST = "api.spotify.com";
-    private static final String CATEGORIES_PATH = "/v1/browse/categories";
-    private static final String NEW_ALBUMS_PATH = "/v1/browse/new-releases";
-    private static final String FEATURED_PATH = "/v1/browse/featured-playlists";
-    private static final String QUERY = "?limit=50";
+    @Value("${spotify.music.base-uri}")
+    private String baseUri;
+    @Value("${spotify.music.categories-path}")
+    private String categoriesPath;
+    @Value("${spotify.music.new-albums-path}")
+    private String newAlbumsPath;
+    @Value("${spotify.music.featured-path}")
+    private String featuredPath;
+    @Value("${spotify.music.query}")
+    private String query;
 
     private final SpotifyResponseParser<String> responseParser;
 
@@ -44,7 +48,7 @@ public class MusicSpotifyService {
     }
 
     public List<Album> getNewAlbums(String accessToken) {
-        String uri = SCHEME + API_HOST + NEW_ALBUMS_PATH + QUERY;
+        String uri = baseUri + newAlbumsPath + query;
         String newAlbumsJson = getJson(uri, accessToken);
 
         List<Album> albumList = this.responseParser.parseNewAlbums(newAlbumsJson);
@@ -52,7 +56,7 @@ public class MusicSpotifyService {
     }
 
     public List<Category> getCategories(String accessToken) {
-        String uri = SCHEME + API_HOST + CATEGORIES_PATH + QUERY;
+        String uri = baseUri + categoriesPath + query;
         String categoriesJson = getJson(uri, accessToken);
 
         List<Category> categoryList = this.responseParser.parseCategories(categoriesJson);
@@ -60,7 +64,7 @@ public class MusicSpotifyService {
     }
 
     public List<Playlist> getPlaylists(String accessToken) {
-        String uri = SCHEME + API_HOST + FEATURED_PATH + QUERY;
+        String uri = baseUri + featuredPath + query;
         String featuredPlaylistsJson = getJson(uri, accessToken);
 
         final List<Playlist> featuredPlaylists = this.responseParser.parsePlaylists(featuredPlaylistsJson, "featured");
@@ -68,7 +72,7 @@ public class MusicSpotifyService {
     }
 
     public List<Playlist> getPlaylists(Category category, String accessToken) {
-        String uri = SCHEME + API_HOST + CATEGORIES_PATH + "/" + category.getId() + "/playlists" + QUERY;
+        String uri = baseUri + categoriesPath + "/" + category.getId() + "/playlists" + query;
         String categoryPlaylistsJson = getJson(uri, accessToken);
 
         final List<Playlist> categoryPlaylists = this.responseParser.parsePlaylists(categoryPlaylistsJson, category.getName());
