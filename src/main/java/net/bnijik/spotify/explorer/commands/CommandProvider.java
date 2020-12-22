@@ -33,72 +33,72 @@ public class CommandProvider {
 
     public SpotifyExplorerCommand provideAuthCommand() {
         if (this.commandMap.get("auth") != null) {
-            command = this.commandMap.get("auth");
+            this.command = this.commandMap.get("auth");
         } else {
-            command = new AuthCommand(this.authSpotifyService, this.view);
+            this.command = new AuthCommand(this.authSpotifyService, this.view);
             this.commandMap.put("auth", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideNewAlbumsCommand() {
         if (this.commandMap.get("new") != null) {
-            command = this.commandMap.get("new");
+            this.command = this.commandMap.get("new");
         } else {
-            command = new NewAlbumsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
+            this.command = new NewAlbumsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
             this.commandMap.put("new", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideFeaturedPlaylistsCommand() {
         if (this.commandMap.get("featured") != null) {
-            command = this.commandMap.get("featured");
+            this.command = this.commandMap.get("featured");
         } else {
-            command = new FeaturedPlaylistsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
+            this.command = new FeaturedPlaylistsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
             this.commandMap.put("featured", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideCategoriesCommand() {
         if (this.commandMap.get("categories") != null) {
-            command = this.commandMap.get("categories");
+            this.command = this.commandMap.get("categories");
         } else {
-            command = new CategoriesCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
+            this.command = new CategoriesCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches);
             this.commandMap.put("categories", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideCategoryPlaylistsCommand(String userInput) {
         if (this.commandMap.get(userInput) != null) {
-            command = this.commandMap.get(userInput);
+            this.command = this.commandMap.get(userInput);
         } else {
-            command = new CategoryPlaylistsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches, userInput);
+            this.command = new CategoryPlaylistsCommand(this.authSpotifyService, this.musicSpotifyService, this.view, this.itemCaches, userInput);
             this.commandMap.put(userInput, command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideNextPageCommand() {
         if (this.commandMap.get("next") != null) {
-            command = this.commandMap.get("next");
+            this.command = this.commandMap.get("next");
         } else {
-            command = new NextPageCommand(this.authSpotifyService, this.view, this.itemCaches);
+            this.command = new NextPageCommand(this.authSpotifyService, this.view, this.itemCaches);
             this.commandMap.put("next", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand providePrevPageCommand() {
         if (this.commandMap.get("prev") != null) {
-            command = this.commandMap.get("prev");
+            this.command = this.commandMap.get("prev");
         } else {
-            command = new PrevPageCommand(this.authSpotifyService, this.view, this.itemCaches);
+            this.command = new PrevPageCommand(this.authSpotifyService, this.view, this.itemCaches);
             this.commandMap.put("prev", command);
         }
-        return command;
+        return this.command;
     }
 
     public SpotifyExplorerCommand provideInvalidCommand() {
