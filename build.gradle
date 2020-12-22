@@ -3,7 +3,8 @@ buildscript {
         junitVersion = '5.7.0' as Object
         gsonVersion = '2.8.6' as Object
         mockitoVersion = '3.6.28' as Object
-        springVersion = '5.3.2' as Object
+        springVersion = '5.2.12.RELEASE' as Object
+        snakeYamlVersion = '1.27' as Object
     }
 }
 
@@ -19,6 +20,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    compile group: 'org.yaml', name: 'snakeyaml', version: "${snakeYamlVersion}"
+
     // https://mvnrepository.com/artifact/org.springframework/spring-core
     compile group: 'org.springframework', name: 'spring-core', version: "${springVersion}"
 
