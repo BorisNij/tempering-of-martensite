@@ -1,28 +1,28 @@
 package net.bnijik.spotify.explorer.commands;
 
-import net.bnijik.spotify.explorer.AuthSpotifyService;
-import net.bnijik.spotify.explorer.Cache;
-import net.bnijik.spotify.explorer.MusicSpotifyService;
-import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.data.MusicItemCache;
 import net.bnijik.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.MusicSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 public class FeaturedPlaylistsCommand implements SpotifyExplorerCommand {
-    private final AuthSpotifyService authSpotifyService;
+    private final AuthSpotifyServiceImpl authSpotifyService;
     private final MusicSpotifyService musicSpotifyService;
-    private final UserConsole view;
-    private final Map<String, Cache> itemCaches;
+    private final UserConsoleService view;
+    private final Map<String, MusicItemCache> itemCaches;
 
-    public FeaturedPlaylistsCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, Map<String, Cache> itemCaches) {
+    public FeaturedPlaylistsCommand(AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsoleService view, Map<String, MusicItemCache> itemCaches) {
         this.authSpotifyService = authSpotifyService;
         this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
 
         if (this.itemCaches.get("featured") == null) {
-            this.itemCaches.put("featured", new Cache<Playlist>(this.view.itemsPerPage()));
+            this.itemCaches.put("featured", new MusicItemCache<Playlist>(this.view.itemsPerPage()));
         }
     }
 

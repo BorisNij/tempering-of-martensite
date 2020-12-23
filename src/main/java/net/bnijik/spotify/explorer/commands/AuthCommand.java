@@ -1,14 +1,14 @@
 package net.bnijik.spotify.explorer.commands;
 
-import net.bnijik.spotify.explorer.AuthSpotifyService;
-import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.service.AuthSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 public class AuthCommand implements SpotifyExplorerCommand {
 
     private final AuthSpotifyService authSpotifyService;
-    private final UserConsole view;
+    private final UserConsoleService view;
 
-    public AuthCommand(AuthSpotifyService authSpotifyService, UserConsole view) {
+    public AuthCommand(AuthSpotifyService authSpotifyService, UserConsoleService view) {
         this.authSpotifyService = authSpotifyService;
         this.view = view;
     }

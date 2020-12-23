@@ -1,9 +1,9 @@
 package net.bnijik.spotify.explorer.commands;
 
-import net.bnijik.spotify.explorer.AuthSpotifyService;
-import net.bnijik.spotify.explorer.Cache;
-import net.bnijik.spotify.explorer.MusicSpotifyService;
-import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.data.MusicItemCache;
+import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.MusicSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,16 +14,16 @@ import java.util.Map;
  * called for the first time.
  */
 public class CommandProvider {
-    private final UserConsole view;
-    private final AuthSpotifyService authSpotifyService;
+    private final UserConsoleService view;
+    private final AuthSpotifyServiceImpl authSpotifyService;
     private final MusicSpotifyService musicSpotifyService;
     @SuppressWarnings("rawtypes")
-    private final Map<String, Cache> itemCaches;
+    private final Map<String, MusicItemCache> itemCaches;
 
     private final Map<String, SpotifyExplorerCommand> commandMap;
     private SpotifyExplorerCommand command;
 
-    public CommandProvider(UserConsole view, AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+    public CommandProvider(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
         this.view = view;
         this.authSpotifyService = authSpotifyService;
         this.musicSpotifyService = musicSpotifyService;

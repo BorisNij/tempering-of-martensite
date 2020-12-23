@@ -1,8 +1,9 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.service;
 
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,26 +28,31 @@ import java.util.List;
  * view of such a list.<p>
  */
 @Service
-public class MusicSpotifyService {
+public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     @Value("${spotify.music.base-uri}")
     private String baseUri;
+
     @Value("${spotify.music.categories-path}")
     private String categoriesPath;
+
     @Value("${spotify.music.new-albums-path}")
     private String newAlbumsPath;
+
     @Value("${spotify.music.featured-path}")
     private String featuredPath;
+
     @Value("${spotify.music.query}")
     private String query;
 
     private final SpotifyResponseParser<String> responseParser;
 
     @Autowired
-    public MusicSpotifyService(SpotifyResponseParser<String> responseParser) {
+    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }
 
+    @Override
     public List<Album> getNewAlbums(String accessToken) {
         String uri = baseUri + newAlbumsPath + query;
         String newAlbumsJson = getJson(uri, accessToken);
@@ -55,6 +61,7 @@ public class MusicSpotifyService {
         return Collections.unmodifiableList(albumList);
     }
 
+    @Override
     public List<Category> getCategories(String accessToken) {
         String uri = baseUri + categoriesPath + query;
         String categoriesJson = getJson(uri, accessToken);
@@ -63,6 +70,7 @@ public class MusicSpotifyService {
         return Collections.unmodifiableList(categoryList);
     }
 
+    @Override
     public List<Playlist> getPlaylists(String accessToken) {
         String uri = baseUri + featuredPath + query;
         String featuredPlaylistsJson = getJson(uri, accessToken);
@@ -71,6 +79,7 @@ public class MusicSpotifyService {
         return Collections.unmodifiableList(featuredPlaylists);
     }
 
+    @Override
     public List<Playlist> getPlaylists(Category category, String accessToken) {
         String uri = baseUri + categoriesPath + "/" + category.getId() + "/playlists" + query;
         String categoryPlaylistsJson = getJson(uri, accessToken);

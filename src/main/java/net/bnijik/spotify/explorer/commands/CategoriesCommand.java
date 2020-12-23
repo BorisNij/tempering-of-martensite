@@ -1,29 +1,29 @@
 package net.bnijik.spotify.explorer.commands;
 
 
-import net.bnijik.spotify.explorer.AuthSpotifyService;
-import net.bnijik.spotify.explorer.Cache;
-import net.bnijik.spotify.explorer.MusicSpotifyService;
-import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.data.MusicItemCache;
 import net.bnijik.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.MusicSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.Map;
 
 public class CategoriesCommand implements SpotifyExplorerCommand {
-    private final AuthSpotifyService authSpotifyService;
+    private final AuthSpotifyServiceImpl authSpotifyService;
     private final MusicSpotifyService musicSpotifyService;
-    private final UserConsole view;
+    private final UserConsoleService view;
     @SuppressWarnings("rawtypes")
-    private final Map<String, Cache> itemCaches;
+    private final Map<String, MusicItemCache> itemCaches;
 
-    public CategoriesCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+    public CategoriesCommand(AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
         this.authSpotifyService = authSpotifyService;
         this.musicSpotifyService = musicSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
 
         if (this.itemCaches.get("categories") == null) {
-            this.itemCaches.put("categories", new Cache<Playlist>(this.view.itemsPerPage()));
+            this.itemCaches.put("categories", new MusicItemCache<Playlist>(this.view.itemsPerPage()));
         }
     }
 

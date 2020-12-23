@@ -1,7 +1,8 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.service;
 
 import com.sun.net.httpserver.HttpServer;
 import net.bnijik.spotify.explorer.commands.AuthCommand;
+import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * (if {@link #manageToSendDefaultBrowserToAuthUri()} method fails).
  */
 @Service
-public class AuthSpotifyService {
+public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
     @Value("${spotify.auth.base-uri}")
     private String baseUri;
@@ -58,10 +59,11 @@ public class AuthSpotifyService {
     private HttpServer server;
 
     @Autowired
-    public AuthSpotifyService(SpotifyResponseParser<String> responseParser) {
+    public AuthSpotifyServiceImpl(SpotifyResponseParser<String> responseParser) {
         this.responseParser = responseParser;
     }
 
+    @Override
     public boolean startListeningForAccessCode() {
         try {
             server = HttpServer.create();
@@ -73,6 +75,7 @@ public class AuthSpotifyService {
         return true;
     }
 
+    @Override
     public boolean manageToSendDefaultBrowserToAuthUri() {
         try {
             Desktop.getDesktop()
@@ -83,6 +86,7 @@ public class AuthSpotifyService {
         return true;
     }
 
+    @Override
     public boolean manageToGetAccessCode() {
         Semaphore s = new Semaphore(0);
         final AccessCodeHolder accessCodeHolder = new AccessCodeHolder();
@@ -119,10 +123,12 @@ public class AuthSpotifyService {
         return true;
     }
 
+    @Override
     public void stopListeningForAccessCode() {
         this.server.stop(1);
     }
 
+    @Override
     public boolean manageToGetAccessToken() {
         if (accessCode == null || accessCode.isBlank()) {
             return false;
@@ -169,6 +175,7 @@ public class AuthSpotifyService {
         return this.accessToken;
     }
 
+    @Override
     public String authUri() {
         return this.baseUri
                + "/authorize?client_id=" + clientId

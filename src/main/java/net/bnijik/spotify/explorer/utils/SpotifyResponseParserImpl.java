@@ -1,4 +1,4 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

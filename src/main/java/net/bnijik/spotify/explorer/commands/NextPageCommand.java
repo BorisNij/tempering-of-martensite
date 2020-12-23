@@ -1,18 +1,18 @@
 package net.bnijik.spotify.explorer.commands;
 
-import net.bnijik.spotify.explorer.AuthSpotifyService;
-import net.bnijik.spotify.explorer.Cache;
-import net.bnijik.spotify.explorer.UserConsole;
+import net.bnijik.spotify.explorer.data.MusicItemCache;
+import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.Map;
 
 public class NextPageCommand implements SpotifyExplorerCommand {
-    private final AuthSpotifyService authSpotifyService;
-    private final UserConsole view;
+    private final AuthSpotifyServiceImpl authSpotifyService;
+    private final UserConsoleService view;
     @SuppressWarnings("rawtypes")
-    private final Map<String, Cache> itemCaches;
+    private final Map<String, MusicItemCache> itemCaches;
 
-    public NextPageCommand(AuthSpotifyService authSpotifyService, UserConsole view, @SuppressWarnings("rawtypes") Map<String, Cache> itemCaches) {
+    public NextPageCommand(AuthSpotifyServiceImpl authSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
         this.authSpotifyService = authSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;
@@ -21,7 +21,7 @@ public class NextPageCommand implements SpotifyExplorerCommand {
     @Override
     public void execute() {
         if (this.authSpotifyService.isAuthorized()) {
-            @SuppressWarnings("rawtypes") final Cache nowShowing = this.itemCaches.get("nowShowing");
+            @SuppressWarnings("rawtypes") final MusicItemCache nowShowing = this.itemCaches.get("nowShowing");
             if (nowShowing.getItems()
                     .isEmpty()) {
                 this.view.errorMsg("Item list is not initialized. " +

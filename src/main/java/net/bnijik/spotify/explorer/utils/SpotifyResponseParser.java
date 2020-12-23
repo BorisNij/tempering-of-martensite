@@ -1,4 +1,4 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.utils;
 
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;

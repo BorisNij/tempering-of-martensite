@@ -3,6 +3,8 @@ package net.bnijik.spotify.explorer;
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
+import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
+import net.bnijik.spotify.explorer.utils.SpotifyResponseParserImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,9 +1,13 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.controller;
 
 import net.bnijik.spotify.explorer.commands.CommandProvider;
 import net.bnijik.spotify.explorer.commands.NextPageCommand;
 import net.bnijik.spotify.explorer.commands.PrevPageCommand;
 import net.bnijik.spotify.explorer.commands.SpotifyExplorerCommand;
+import net.bnijik.spotify.explorer.data.MusicItemCache;
+import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.MusicSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,30 +17,30 @@ import java.util.Objects;
 
 /**
  * Processes user command-strings received via the View into {@link SpotifyExplorerCommand} objects.
- * Passes the View, Service and music item {@code Cache} objects
+ * Passes the View, Service and music item {@code MusicItemCache} objects
  * to the {@code SpotifyExplorerCommand} as arguments. Executes the {@code SpotifyExplorerCommand}
  * that corresponds to the user command-string.<p>
  * <p>
  * Instantiates and maintains the following objects:
  * <ul>
  *     <li> A hash map of (Album, Category or Playlist) music item Caches</li>
- *     <li> A <i>now-showing</i> Cache entry in the hash map holding the cache that currently
+ *     <li> A <i>now-showing</i> MusicItemCache entry in the hash map holding the cache that currently
  *          presents its items to the user. The {@link NextPageCommand} and
- *          {@link PrevPageCommand} update the {@code Page} of this cache</li>
+ *          {@link PrevPageCommand} update the {@code MusicItemPage} of this cache</li>
  *     <li> A {@link CommandProvider}</li>
  * </ul>
  */
 @Component
 public class CommandController {
-    private final UserConsole view;
+    private final UserConsoleService view;
     private final CommandProvider commandProvider;
 
     @Autowired
-    public CommandController(UserConsole view, AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService) {
+    public CommandController(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService) {
         //noinspection rawtypes
-        Map<String, Cache> itemCaches = new HashMap<>();
+        Map<String, MusicItemCache> itemCaches = new HashMap<>();
         //noinspection rawtypes
-        itemCaches.put("nowShowing", new Cache(view.itemsPerPage()));
+        itemCaches.put("nowShowing", new MusicItemCache(view.itemsPerPage()));
         this.commandProvider = new CommandProvider(view, authSpotifyService, musicSpotifyService, itemCaches);
         this.view = Objects.requireNonNull(view);
     }

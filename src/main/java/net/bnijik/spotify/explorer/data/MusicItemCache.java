@@ -1,4 +1,4 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.data;
 
 import net.bnijik.spotify.explorer.commands.CategoriesCommand;
 import net.bnijik.spotify.explorer.commands.CategoryPlaylistsCommand;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Holds a list of objects implementing the {@link MusicItem} interface.
- * Allows producing a sub-list of these objects, namely an object Page
+ * Allows producing a sub-list of these objects, namely an object MusicItemPage
  * with a predefined number of items per page. Provides methods for scrolling
  * back and forth the original list ({@link #prevPage()} and {@link #nextPage()}).<p>
  * <p>
@@ -26,46 +26,46 @@ import java.util.stream.Collectors;
  *
  * @param <T> bound by Album, Category or Playlist types.
  */
-public class Cache<T extends MusicItem> {
+public class MusicItemCache<T extends MusicItem> {
 
-    // shared empty Page instance used for empty instances
+    // shared empty MusicItemPage instance used for empty instances
     @SuppressWarnings("rawtypes")
-    private static final Page EMPTY_PAGE = new EmptyPage();
+    private static final MusicItemPage EMPTY_MUSIC_ITEM_PAGE = new EmptyMusicItemPage();
     private static final int DEFAULT_ITEMS_PER_PAGE = 5;
     private static final int MINIMUM_ITEMS_PER_PAGE = 1;
 
     private List<T> musicItems;
-    private final Page<T> page;
+    private final MusicItemPage<T> page;
     private final int itemsPerPage;
 
-    public Cache(int itemsPerPage) {
+    public MusicItemCache(int itemsPerPage) {
         this.itemsPerPage = itemsPerPage < MINIMUM_ITEMS_PER_PAGE
                 ? DEFAULT_ITEMS_PER_PAGE
                 : itemsPerPage;
         this.musicItems = new ArrayList<>();
-        this.page = new Page<>();
+        this.page = new MusicItemPage<>();
     }
 
-    public static <T extends MusicItem> Page<T> pageOf(List<T> items, int thisPageNum, int lastPageNum) {
+    public static <T extends MusicItem> MusicItemPage<T> pageOf(List<T> items, int thisPageNum, int lastPageNum) {
         if (items == null || thisPageNum < 1 || lastPageNum < 1) {
             return null;
         }
 
         if (items.isEmpty() || thisPageNum > lastPageNum) {
             //noinspection unchecked
-            return (Page<T>) EMPTY_PAGE;
+            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
-        Page<T> itemPage = new Page<>();
+        MusicItemPage<T> itemPage = new MusicItemPage<>();
         itemPage.items = items;
         itemPage.currentPage = thisPageNum;
         itemPage.lastPage = lastPageNum;
         return itemPage;
     }
 
-    public static <T extends MusicItem> Page<T> emptyPage() {
+    public static <T extends MusicItem> MusicItemPage<T> emptyPage() {
         //noinspection unchecked
-        return (Page<T>) EMPTY_PAGE;
+        return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
     }
 
     public List<T> getItems() {
@@ -89,10 +89,10 @@ public class Cache<T extends MusicItem> {
         this.page.lastPage = this.calcLastPage();
     }
 
-    public Page<T> currentPage() {
+    public MusicItemPage<T> currentPage() {
         if (this.musicItems.isEmpty()) {
             //noinspection unchecked
-            return (Page<T>) EMPTY_PAGE;
+            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
         if (this.page.items == null) {
@@ -101,10 +101,10 @@ public class Cache<T extends MusicItem> {
         return this.page;
     }
 
-    public Page<T> nextPage() {
+    public MusicItemPage<T> nextPage() {
         if (this.musicItems.isEmpty()) {
             //noinspection unchecked
-            return (Page<T>) EMPTY_PAGE;
+            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
         if (this.page.items == null) {
@@ -113,7 +113,7 @@ public class Cache<T extends MusicItem> {
 
         if (this.page.currentPage == this.page.lastPage) {
             //noinspection unchecked
-            return (Page<T>) EMPTY_PAGE;
+            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         } else {
             this.page.lastShownItem += this.itemsPerPage;
             this.page.currentPage++;
@@ -122,10 +122,10 @@ public class Cache<T extends MusicItem> {
         }
     }
 
-    public Page<T> prevPage() {
+    public MusicItemPage<T> prevPage() {
         if (this.musicItems.isEmpty()) {
             //noinspection unchecked
-            return EMPTY_PAGE;
+            return EMPTY_MUSIC_ITEM_PAGE;
         }
 
         if (this.page.items == null) {
@@ -134,7 +134,7 @@ public class Cache<T extends MusicItem> {
 
         if (this.page.currentPage == 1) {
             //noinspection unchecked
-            return EMPTY_PAGE;
+            return EMPTY_MUSIC_ITEM_PAGE;
         } else {
             this.page.lastShownItem -= this.itemsPerPage;
             this.page.currentPage--;
@@ -156,14 +156,14 @@ public class Cache<T extends MusicItem> {
         return lastPage * this.itemsPerPage == this.musicItems.size() ? lastPage : lastPage + 1;
     }
 
-    public static class Page<T extends MusicItem> {
+    public static class MusicItemPage<T extends MusicItem> {
 
         private List<T> items;
         private int currentPage;
         private int lastShownItem;
         private int lastPage;
 
-        public Page() {
+        public MusicItemPage() {
             this.currentPage = 1;
             this.lastShownItem = 0;
             this.lastPage = this.currentPage;
@@ -182,11 +182,11 @@ public class Cache<T extends MusicItem> {
         }
     }
 
-    private static class EmptyPage<T extends MusicItem> extends Page<T> {
-        private final Page<T> page;
+    private static class EmptyMusicItemPage<T extends MusicItem> extends MusicItemPage<T> {
+        private final MusicItemPage<T> page;
 
-        private EmptyPage() {
-            this.page = new Page<>();
+        private EmptyMusicItemPage() {
+            this.page = new MusicItemPage<>();
             this.page.items = Collections.emptyList();
         }
 
