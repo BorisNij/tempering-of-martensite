@@ -27,8 +27,8 @@ public class Playlist implements MusicItem {
     @Override
     public String description() {
         return
-                this.name + "\n" +
-                this.url + "\n";
+                name + "\n" +
+                url + "\n";
     }
 
     @Override

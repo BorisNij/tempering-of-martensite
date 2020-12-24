@@ -17,7 +17,7 @@ public class AuthCommand implements SpotifyExplorerCommand {
     public void execute() {
         tryStartListeningForAccessCode();
 
-        this.view.display("Waiting for Access Code...");
+        view.display("Waiting for Access Code...");
 
         trySendingDefaultBrowserToAuthUri();
 
@@ -28,33 +28,33 @@ public class AuthCommand implements SpotifyExplorerCommand {
 
     private void tryGettingAccessToken() {
         if (!authSpotifyService.manageToGetAccessToken()) {
-            this.view.errorMsg("Failed to get Access Token");
+            view.errorMsg("Failed to get Access Token");
         } else {
-            this.view.display("Access Token received successfully." + "\n" +
-                              "Authentication completed!");
+            view.display("Access Token received successfully." + "\n" +
+                         "Authentication completed!");
         }
     }
 
     private void tryGettingAccessCode() {
         if (!authSpotifyService.manageToGetAccessCode()) {
-            this.view.errorMsg("Failed to get Access Code");
+            view.errorMsg("Failed to get Access Code");
         } else {
-            this.authSpotifyService.stopListeningForAccessCode();
-            this.view.display("Access Code received successfully.");
+            authSpotifyService.stopListeningForAccessCode();
+            view.display("Access Code received successfully.");
         }
     }
 
     private void trySendingDefaultBrowserToAuthUri() {
         if (!authSpotifyService.manageToSendDefaultBrowserToAuthUri()) {
-            this.view.errorMsg("Failed to start default browser.");
-            this.view.errorMsg("Use this link to request Access Code:");
-            this.view.display(this.authSpotifyService.authUri());
+            view.errorMsg("Failed to start default browser.");
+            view.errorMsg("Use this link to request Access Code:");
+            view.display(authSpotifyService.authUri());
         }
     }
 
     private void tryStartListeningForAccessCode() {
         if (!authSpotifyService.startListeningForAccessCode()) {
-            this.view.errorMsg("Failed to start server, cannot begin listening for Access Code");
+            view.errorMsg("Failed to start server, cannot begin listening for Access Code");
         }
     }
 }

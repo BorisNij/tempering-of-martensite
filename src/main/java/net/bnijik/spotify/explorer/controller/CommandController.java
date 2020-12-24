@@ -46,12 +46,12 @@ public class CommandController {
     }
 
     public void start() {
-        this.view.display("Greetings! :)");
-        this.view.display("This is your Spotify Explorer");
+        view.display("Greetings! :)");
+        view.display("This is your Spotify Explorer");
         SpotifyExplorerCommand command;
 
         while (true) {
-            String commandString = this.view.getUserCommandString();
+            String commandString = view.getUserCommandString();
 
             switch (commandString.toUpperCase()
                     .split("\\s")[0]) {
@@ -84,7 +84,7 @@ public class CommandController {
                     break;
 
                 case "EXIT":
-                    this.view.display("Terminating...");
+                    view.display("Terminating...");
                     return;
 
                 default:

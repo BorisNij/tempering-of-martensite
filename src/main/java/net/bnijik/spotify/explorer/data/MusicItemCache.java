@@ -69,11 +69,11 @@ public class MusicItemCache<T extends MusicItem> {
     }
 
     public List<T> getItems() {
-        return this.musicItems;
+        return musicItems;
     }
 
     public T getByName(String itemName) {
-        return this.musicItems.stream()
+        return musicItems.stream()
                 .filter(item -> item.description()
                         .contains(itemName))
                 .findFirst()
@@ -86,74 +86,74 @@ public class MusicItemCache<T extends MusicItem> {
         }
 
         this.musicItems = musicItems;
-        this.page.lastPage = this.calcLastPage();
+        page.lastPage = calcLastPage();
     }
 
     public MusicItemPage<T> currentPage() {
-        if (this.musicItems.isEmpty()) {
+        if (musicItems.isEmpty()) {
             //noinspection unchecked
             return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
-        if (this.page.items == null) {
+        if (page.items == null) {
             setPage();
         }
-        return this.page;
+        return page;
     }
 
     public MusicItemPage<T> nextPage() {
-        if (this.musicItems.isEmpty()) {
+        if (musicItems.isEmpty()) {
             //noinspection unchecked
             return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
-        if (this.page.items == null) {
+        if (page.items == null) {
             setPage();
         }
 
-        if (this.page.currentPage == this.page.lastPage) {
+        if (page.currentPage == page.lastPage) {
             //noinspection unchecked
             return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
         } else {
-            this.page.lastShownItem += this.itemsPerPage;
-            this.page.currentPage++;
+            page.lastShownItem += itemsPerPage;
+            page.currentPage++;
             setPage();
-            return this.page;
+            return page;
         }
     }
 
     public MusicItemPage<T> prevPage() {
-        if (this.musicItems.isEmpty()) {
+        if (musicItems.isEmpty()) {
             //noinspection unchecked
             return EMPTY_MUSIC_ITEM_PAGE;
         }
 
-        if (this.page.items == null) {
+        if (page.items == null) {
             setPage();
         }
 
-        if (this.page.currentPage == 1) {
+        if (page.currentPage == 1) {
             //noinspection unchecked
             return EMPTY_MUSIC_ITEM_PAGE;
         } else {
-            this.page.lastShownItem -= this.itemsPerPage;
-            this.page.currentPage--;
+            page.lastShownItem -= itemsPerPage;
+            page.currentPage--;
             setPage();
-            return this.page;
+            return page;
         }
     }
 
     private void setPage() {
 
-        this.page.items = this.musicItems.stream()
-                .skip(this.page.lastShownItem)
-                .limit(this.itemsPerPage)
+        page.items = musicItems.stream()
+                .skip(page.lastShownItem)
+                .limit(itemsPerPage)
                 .collect(Collectors.toList());
     }
 
     private int calcLastPage() {
-        int lastPage = this.musicItems.size() / this.itemsPerPage;
-        return lastPage * this.itemsPerPage == this.musicItems.size() ? lastPage : lastPage + 1;
+        int lastPage = musicItems.size() / itemsPerPage;
+        return lastPage * itemsPerPage == musicItems.size() ? lastPage : lastPage + 1;
     }
 
     public static class MusicItemPage<T extends MusicItem> {
@@ -166,7 +166,7 @@ public class MusicItemCache<T extends MusicItem> {
         public MusicItemPage() {
             this.currentPage = 1;
             this.lastShownItem = 0;
-            this.lastPage = this.currentPage;
+            this.lastPage = currentPage;
         }
 
         public List<T> list() {
@@ -192,7 +192,7 @@ public class MusicItemCache<T extends MusicItem> {
 
         @Override
         public List<T> list() {
-            return this.page.items;
+            return page.items;
         }
     }
 

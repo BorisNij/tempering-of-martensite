@@ -24,38 +24,38 @@ public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
         this.commandString = commandString;
         this.itemCaches = itemCaches;
 
-        if (this.itemCaches.get(commandString) == null) {
-            this.itemCaches.put(commandString, new MusicItemCache<Playlist>(this.view.itemsPerPage()));
+        if (itemCaches.get(commandString) == null) {
+            itemCaches.put(commandString, new MusicItemCache<Playlist>(view.itemsPerPage()));
         }
     }
 
     @Override
     public void execute() {
-        if (this.authSpotifyService.isAuthorized()) {
-            if (this.itemCaches.get(commandString)
+        if (authSpotifyService.isAuthorized()) {
+            if (itemCaches.get(commandString)
                     .getItems()
                     .isEmpty()) {
 
                 //noinspection unchecked
-                final MusicItemCache<Category> categoryMusicItemCache = this.itemCaches.get("categories");
+                final MusicItemCache<Category> categoryMusicItemCache = itemCaches.get("categories");
                 final String soughtCategory = commandString.substring(commandString.indexOf(' ') + 1);
                 Category category = categoryMusicItemCache.getByName(soughtCategory);
 
                 if (category == null) {
-                    this.view.errorMsg("Cannot find a Category with the name " + soughtCategory + ". Please try again.");
+                    view.errorMsg("Cannot find a Category with the name " + soughtCategory + ". Please try again.");
                     return;
                 }
 
                 //noinspection unchecked
-                this.itemCaches.get(commandString)
-                        .setItems(this.musicSpotifyService.getPlaylists(category, this.authSpotifyService.getAccessToken()));
+                itemCaches.get(commandString)
+                        .setItems(musicSpotifyService.getPlaylists(category, authSpotifyService.getAccessToken()));
             }
-            this.itemCaches.put("nowShowing", this.itemCaches.get(commandString));
+            itemCaches.put("nowShowing", itemCaches.get(commandString));
             //noinspection unchecked
-            this.view.display(this.itemCaches.get("nowShowing")
-                                      .currentPage());
+            view.display(itemCaches.get("nowShowing")
+                                 .currentPage());
         } else {
-            this.view.display("Please authenticate with Spotify first ('auth')");
+            view.display("Please authenticate with Spotify first ('auth')");
         }
     }
 }

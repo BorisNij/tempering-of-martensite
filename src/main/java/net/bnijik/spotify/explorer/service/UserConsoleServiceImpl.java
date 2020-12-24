@@ -15,7 +15,7 @@ import java.util.Scanner;
  * outputs error messages to the user.
  */
 @Service
-public class UserConsoleServiceImpl implements UserConsoleService {
+public class UserConsoleServiceImpl implements UserConsoleService, AutoCloseable {
 
     private static final Scanner scanner;
     private final int itemsPerPage;

@@ -22,27 +22,27 @@ public class CategoriesCommand implements SpotifyExplorerCommand {
         this.view = view;
         this.itemCaches = itemCaches;
 
-        if (this.itemCaches.get("categories") == null) {
-            this.itemCaches.put("categories", new MusicItemCache<Playlist>(this.view.itemsPerPage()));
+        if (itemCaches.get("categories") == null) {
+            itemCaches.put("categories", new MusicItemCache<Playlist>(view.itemsPerPage()));
         }
     }
 
     @Override
     public void execute() {
-        if (this.authSpotifyService.isAuthorized()) {
-            if (this.itemCaches.get("categories")
+        if (authSpotifyService.isAuthorized()) {
+            if (itemCaches.get("categories")
                     .getItems()
                     .isEmpty()) {
                 //noinspection unchecked
-                this.itemCaches.get("categories")
-                        .setItems(this.musicSpotifyService.getCategories(this.authSpotifyService.getAccessToken()));
+                itemCaches.get("categories")
+                        .setItems(musicSpotifyService.getCategories(authSpotifyService.getAccessToken()));
             }
-            this.itemCaches.put("nowShowing", this.itemCaches.get("categories"));
+            itemCaches.put("nowShowing", itemCaches.get("categories"));
             //noinspection unchecked
-            this.view.display(this.itemCaches.get("nowShowing")
-                                      .currentPage());
+            view.display(itemCaches.get("nowShowing")
+                                 .currentPage());
         } else {
-            this.view.display("Please authenticate with Spotify first ('auth')");
+            view.display("Please authenticate with Spotify first ('auth')");
         }
     }
 }

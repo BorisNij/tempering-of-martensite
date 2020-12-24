@@ -20,7 +20,7 @@ public class Category implements MusicItem {
 
     @Override
     public String description() {
-        return this.name + "\n";
+        return name + "\n";
     }
 
     @Override

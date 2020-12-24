@@ -29,9 +29,9 @@ public class Album implements MusicItem {
     @Override
     public String description() {
         return
-                this.albumName + "\n" +
-                        this.artistNames + "\n" +
-                        this.url + "\n";
+                albumName + "\n" +
+                artistNames + "\n" +
+                url + "\n";
     }
 
     @Override
@@ -55,9 +55,9 @@ public class Album implements MusicItem {
     @Override
     public String toString() {
         return "Album{" +
-                "albumName='" + albumName + '\'' +
-                ", artistNames='" + artistNames + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+               "albumName='" + albumName + '\'' +
+               ", artistNames='" + artistNames + '\'' +
+               ", url='" + url + '\'' +
+               '}';
     }
 }

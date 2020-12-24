@@ -21,27 +21,27 @@ public class FeaturedPlaylistsCommand implements SpotifyExplorerCommand {
         this.view = view;
         this.itemCaches = itemCaches;
 
-        if (this.itemCaches.get("featured") == null) {
-            this.itemCaches.put("featured", new MusicItemCache<Playlist>(this.view.itemsPerPage()));
+        if (itemCaches.get("featured") == null) {
+            itemCaches.put("featured", new MusicItemCache<Playlist>(view.itemsPerPage()));
         }
     }
 
     @Override
     public void execute() {
-        if (this.authSpotifyService.isAuthorized()) {
-            if (this.itemCaches.get("featured")
+        if (authSpotifyService.isAuthorized()) {
+            if (itemCaches.get("featured")
                     .getItems()
                     .isEmpty()) {
                 //noinspection unchecked
-                this.itemCaches.get("featured")
-                        .setItems(this.musicSpotifyService.getPlaylists(this.authSpotifyService.getAccessToken()));
+                itemCaches.get("featured")
+                        .setItems(musicSpotifyService.getPlaylists(authSpotifyService.getAccessToken()));
             }
-            this.itemCaches.put("nowShowing", this.itemCaches.get("featured"));
+            itemCaches.put("nowShowing", itemCaches.get("featured"));
             //noinspection unchecked
-            this.view.display(this.itemCaches.get("nowShowing")
-                                      .currentPage());
+            view.display(itemCaches.get("nowShowing")
+                                 .currentPage());
         } else {
-            this.view.display("Please authenticate with Spotify first ('auth')");
+            view.display("Please authenticate with Spotify first ('auth')");
         }
     }
 }

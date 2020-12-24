@@ -21,26 +21,26 @@ public class NewAlbumsCommand implements SpotifyExplorerCommand {
         this.view = view;
         this.itemCaches = itemCaches;
 
-        if (this.itemCaches.get("new") == null) {
-            this.itemCaches.put("new", new MusicItemCache<Album>(this.view.itemsPerPage()));
+        if (itemCaches.get("new") == null) {
+            itemCaches.put("new", new MusicItemCache<Album>(view.itemsPerPage()));
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void execute() {
-        if (this.authSpotifyService.isAuthorized()) {
-            if (this.itemCaches.get("new")
+        if (authSpotifyService.isAuthorized()) {
+            if (itemCaches.get("new")
                     .getItems()
                     .isEmpty()) {
-                this.itemCaches.get("new")
-                        .setItems(this.musicSpotifyService.getNewAlbums(this.authSpotifyService.getAccessToken()));
+                itemCaches.get("new")
+                        .setItems(musicSpotifyService.getNewAlbums(authSpotifyService.getAccessToken()));
             }
-            this.itemCaches.put("nowShowing", this.itemCaches.get("new"));
-            this.view.display(this.itemCaches.get("nowShowing")
-                                      .currentPage());
+            itemCaches.put("nowShowing", itemCaches.get("new"));
+            view.display(itemCaches.get("nowShowing")
+                                 .currentPage());
         } else {
-            this.view.display("Please authenticate with Spotify first ('auth')");
+            view.display("Please authenticate with Spotify first ('auth')");
         }
     }
 }

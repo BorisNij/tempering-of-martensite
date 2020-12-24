@@ -57,7 +57,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
         String uri = baseUri + newAlbumsPath + query;
         String newAlbumsJson = getJson(uri, accessToken);
 
-        List<Album> albumList = this.responseParser.parseNewAlbums(newAlbumsJson);
+        List<Album> albumList = responseParser.parseNewAlbums(newAlbumsJson);
         return Collections.unmodifiableList(albumList);
     }
 
@@ -66,7 +66,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
         String uri = baseUri + categoriesPath + query;
         String categoriesJson = getJson(uri, accessToken);
 
-        List<Category> categoryList = this.responseParser.parseCategories(categoriesJson);
+        List<Category> categoryList = responseParser.parseCategories(categoriesJson);
         return Collections.unmodifiableList(categoryList);
     }
 
@@ -75,7 +75,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
         String uri = baseUri + featuredPath + query;
         String featuredPlaylistsJson = getJson(uri, accessToken);
 
-        final List<Playlist> featuredPlaylists = this.responseParser.parsePlaylists(featuredPlaylistsJson, "featured");
+        final List<Playlist> featuredPlaylists = responseParser.parsePlaylists(featuredPlaylistsJson, "featured");
         return Collections.unmodifiableList(featuredPlaylists);
     }
 
@@ -84,7 +84,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
         String uri = baseUri + categoriesPath + "/" + category.getId() + "/playlists" + query;
         String categoryPlaylistsJson = getJson(uri, accessToken);
 
-        final List<Playlist> categoryPlaylists = this.responseParser.parsePlaylists(categoryPlaylistsJson, category.getName());
+        final List<Playlist> categoryPlaylists = responseParser.parsePlaylists(categoryPlaylistsJson, category.getName());
         return Collections.unmodifiableList(categoryPlaylists);
     }
 

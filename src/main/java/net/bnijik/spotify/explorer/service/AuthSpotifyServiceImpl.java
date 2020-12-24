@@ -40,16 +40,22 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
     @Value("${spotify.auth.base-uri}")
     private String baseUri;
+
     @Value("${spotify.auth.token-path}")
     private String tokenPath;
+
     @Value("${server.port}")
     private int port;
+
     @Value("${spotify.auth.redirect-base-uri}")
     private String redirectBaseUri;
+
     @Value("${spotify.auth.client-id}")
     private String clientId;
+
     @Value("${spotify.auth.client-secret}")
     private String clientSecret;
+
     @Value("${server.context-path}")
     private String contextPath;
 
@@ -91,7 +97,7 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
         Semaphore s = new Semaphore(0);
         final AccessCodeHolder accessCodeHolder = new AccessCodeHolder();
 
-        server.createContext(this.contextPath, exchange -> {
+        server.createContext(contextPath, exchange -> {
             try {
                 String query = exchange.getRequestURI()
                         .getQuery();
@@ -119,13 +125,13 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
         } catch (Exception e) {
             return false;
         }
-        this.accessCode = accessCodeHolder.aCode;
+        accessCode = accessCodeHolder.aCode;
         return true;
     }
 
     @Override
     public void stopListeningForAccessCode() {
-        this.server.stop(1);
+        server.stop(1);
     }
 
     @Override
@@ -151,16 +157,16 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            String parsedAccessToken = this.responseParser.parseAccessToken(response.body());
+            String parsedAccessToken = responseParser.parseAccessToken(response.body());
 
             if (parsedAccessToken.toLowerCase()
                         .contains("error") || parsedAccessToken.isBlank()) {
                 throw new IOException();
             }
-            this.accessToken = parsedAccessToken;
+            accessToken = parsedAccessToken;
 
         } catch (IOException | InterruptedException | NullPointerException e) {
-            this.accessToken = null;
+            accessToken = null;
             return false;
         }
 
@@ -172,12 +178,12 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
     }
 
     public String getAccessToken() {
-        return this.accessToken;
+        return accessToken;
     }
 
     @Override
     public String authUri() {
-        return this.baseUri
+        return baseUri
                + "/authorize?client_id=" + clientId
                + "&redirect_uri=" + redirectBaseUri + ":" + port
                + "&response_type=code";
