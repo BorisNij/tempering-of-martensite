@@ -1,11 +1,11 @@
 package net.bnijik.spotify.explorer.service;
 
+import net.bnijik.spotify.explorer.configuration.MusicSpotifyConfig;
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
 import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,31 +30,18 @@ import java.util.List;
 @Service
 public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
-    @Value("${spotify.music.base-uri}")
-    private String baseUri;
-
-    @Value("${spotify.music.categories-path}")
-    private String categoriesPath;
-
-    @Value("${spotify.music.new-albums-path}")
-    private String newAlbumsPath;
-
-    @Value("${spotify.music.featured-path}")
-    private String featuredPath;
-
-    @Value("${spotify.music.query}")
-    private String query;
-
     private final SpotifyResponseParser<String> responseParser;
+    private final MusicSpotifyConfig musicSpotifyConfig;
 
     @Autowired
-    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser) {
+    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, MusicSpotifyConfig musicSpotifyConfig) {
         this.responseParser = responseParser;
+        this.musicSpotifyConfig = musicSpotifyConfig;
     }
 
     @Override
     public List<Album> getNewAlbums(String accessToken) {
-        String uri = baseUri + newAlbumsPath + query;
+        String uri = musicSpotifyConfig.getBaseUri() + musicSpotifyConfig.getNewAlbumsPath() + musicSpotifyConfig.getQuery();
         String newAlbumsJson = getJson(uri, accessToken);
 
         List<Album> albumList = responseParser.parseNewAlbums(newAlbumsJson);
@@ -63,7 +50,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     @Override
     public List<Category> getCategories(String accessToken) {
-        String uri = baseUri + categoriesPath + query;
+        String uri = musicSpotifyConfig.getBaseUri() + musicSpotifyConfig.getCategoriesPath() + musicSpotifyConfig.getQuery();
         String categoriesJson = getJson(uri, accessToken);
 
         List<Category> categoryList = responseParser.parseCategories(categoriesJson);
@@ -72,7 +59,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     @Override
     public List<Playlist> getPlaylists(String accessToken) {
-        String uri = baseUri + featuredPath + query;
+        String uri = musicSpotifyConfig.getBaseUri() + musicSpotifyConfig.getFeaturedPath() + musicSpotifyConfig.getQuery();
         String featuredPlaylistsJson = getJson(uri, accessToken);
 
         final List<Playlist> featuredPlaylists = responseParser.parsePlaylists(featuredPlaylistsJson, "featured");
@@ -81,7 +68,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     @Override
     public List<Playlist> getPlaylists(Category category, String accessToken) {
-        String uri = baseUri + categoriesPath + "/" + category.getId() + "/playlists" + query;
+        String uri = musicSpotifyConfig.getBaseUri() + musicSpotifyConfig.getCategoriesPath() + "/" + category.getId() + "/playlists" + musicSpotifyConfig.getQuery();
         String categoryPlaylistsJson = getJson(uri, accessToken);
 
         final List<Playlist> categoryPlaylists = responseParser.parsePlaylists(categoryPlaylistsJson, category.getName());

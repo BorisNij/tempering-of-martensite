@@ -2,9 +2,9 @@ package net.bnijik.spotify.explorer.service;
 
 import com.sun.net.httpserver.HttpServer;
 import net.bnijik.spotify.explorer.commands.AuthCommand;
+import net.bnijik.spotify.explorer.configuration.AuthSpotifyConfig;
 import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -38,42 +38,24 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
-    @Value("${spotify.auth.base-uri}")
-    private String baseUri;
-
-    @Value("${spotify.auth.token-path}")
-    private String tokenPath;
-
-    @Value("${server.port}")
-    private int port;
-
-    @Value("${spotify.auth.redirect-base-uri}")
-    private String redirectBaseUri;
-
-    @Value("${spotify.auth.client-id}")
-    private String clientId;
-
-    @Value("${spotify.auth.client-secret}")
-    private String clientSecret;
-
-    @Value("${server.context-path}")
-    private String contextPath;
-
     private final SpotifyResponseParser<String> responseParser;
+    private final AuthSpotifyConfig authSpotifyConfig;
+
     private String accessToken = "";
     private String accessCode = "";
     private HttpServer server;
 
     @Autowired
-    public AuthSpotifyServiceImpl(SpotifyResponseParser<String> responseParser) {
+    public AuthSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, AuthSpotifyConfig authSpotifyConfig) {
         this.responseParser = responseParser;
+        this.authSpotifyConfig = authSpotifyConfig;
     }
 
     @Override
     public boolean startListeningForAccessCode() {
         try {
             server = HttpServer.create();
-            server.bind(new InetSocketAddress(port), 0);
+            server.bind(new InetSocketAddress(authSpotifyConfig.getPort()), 0);
             server.start();
         } catch (Exception e) {
             return false;
@@ -97,7 +79,7 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
         Semaphore s = new Semaphore(0);
         final AccessCodeHolder accessCodeHolder = new AccessCodeHolder();
 
-        server.createContext(contextPath, exchange -> {
+        server.createContext(authSpotifyConfig.getContextPath(), exchange -> {
             try {
                 String query = exchange.getRequestURI()
                         .getQuery();
@@ -140,16 +122,16 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
             return false;
         }
 
-        String uri = baseUri + tokenPath;
+        String uri = authSpotifyConfig.getBaseUri() + authSpotifyConfig.getTokenPath();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-type", "application/x-www-form-urlencoded")
                 .uri(URI.create(uri))
-                .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + clientId
-                                                          + "&client_secret=" + clientSecret
+                .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + authSpotifyConfig.getClientId()
+                                                          + "&client_secret=" + authSpotifyConfig.getClientSecret()
                                                           + "&grant_type=authorization_code"
                                                           + "&code=" + accessCode
-                                                          + "&redirect_uri=" + redirectBaseUri + ":" + port))
+                                                          + "&redirect_uri=" + authSpotifyConfig.getRedirectBaseUri() + ":" + authSpotifyConfig.getPort()))
                 .build();
 
         try {
@@ -183,9 +165,9 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
     @Override
     public String authUri() {
-        return baseUri
-               + "/authorize?client_id=" + clientId
-               + "&redirect_uri=" + redirectBaseUri + ":" + port
+        return authSpotifyConfig.getBaseUri()
+               + "/authorize?client_id=" + authSpotifyConfig.getClientId()
+               + "&redirect_uri=" + authSpotifyConfig.getRedirectBaseUri() + ":" + authSpotifyConfig.getPort()
                + "&response_type=code";
     }
 
