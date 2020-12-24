@@ -1,10 +1,10 @@
 package net.bnijik.spotify.explorer.data;
 
-import net.bnijik.spotify.explorer.commands.CategoriesCommand;
-import net.bnijik.spotify.explorer.commands.CategoryPlaylistsCommand;
-import net.bnijik.spotify.explorer.commands.FeaturedPlaylistsCommand;
-import net.bnijik.spotify.explorer.commands.NewAlbumsCommand;
 import net.bnijik.spotify.explorer.model.MusicItem;
+import net.bnijik.spotify.explorer.service.commands.CategoriesCommand;
+import net.bnijik.spotify.explorer.service.commands.CategoryPlaylistsCommand;
+import net.bnijik.spotify.explorer.service.commands.FeaturedPlaylistsCommand;
+import net.bnijik.spotify.explorer.service.commands.NewAlbumsCommand;
 
 import java.util.ArrayList;
 import java.util.Collections;

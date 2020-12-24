@@ -1,4 +1,4 @@
-package net.bnijik.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.service.commands;
 
 import net.bnijik.spotify.explorer.data.MusicItemCache;
 import net.bnijik.spotify.explorer.model.Album;

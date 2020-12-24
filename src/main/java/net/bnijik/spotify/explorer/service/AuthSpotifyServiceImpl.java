@@ -1,8 +1,8 @@
 package net.bnijik.spotify.explorer.service;
 
 import com.sun.net.httpserver.HttpServer;
-import net.bnijik.spotify.explorer.commands.AuthCommand;
 import net.bnijik.spotify.explorer.configuration.AuthSpotifyConfig;
+import net.bnijik.spotify.explorer.service.commands.AuthCommand;
 import net.bnijik.spotify.explorer.utils.SpotifyResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

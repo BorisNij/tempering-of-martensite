@@ -1,13 +1,10 @@
 package net.bnijik.spotify.explorer.controller;
 
-import net.bnijik.spotify.explorer.commands.CommandProvider;
-import net.bnijik.spotify.explorer.commands.NextPageCommand;
-import net.bnijik.spotify.explorer.commands.PrevPageCommand;
-import net.bnijik.spotify.explorer.commands.SpotifyExplorerCommand;
 import net.bnijik.spotify.explorer.data.MusicItemCache;
-import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
-import net.bnijik.spotify.explorer.service.MusicSpotifyService;
-import net.bnijik.spotify.explorer.service.UserConsoleService;
+import net.bnijik.spotify.explorer.service.*;
+import net.bnijik.spotify.explorer.service.commands.NextPageCommand;
+import net.bnijik.spotify.explorer.service.commands.PrevPageCommand;
+import net.bnijik.spotify.explorer.service.commands.SpotifyExplorerCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +24,13 @@ import java.util.Objects;
  *     <li> A <i>now-showing</i> MusicItemCache entry in the hash map holding the cache that currently
  *          presents its items to the user. The {@link NextPageCommand} and
  *          {@link PrevPageCommand} update the {@code MusicItemPage} of this cache</li>
- *     <li> A {@link CommandProvider}</li>
+ *     <li> A {@link CommandServiceImpl}</li>
  * </ul>
  */
 @Component
 public class CommandController {
     private final UserConsoleService view;
-    private final CommandProvider commandProvider;
+    private final CommandService commandService;
 
     @Autowired
     public CommandController(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService) {
@@ -41,7 +38,7 @@ public class CommandController {
         Map<String, MusicItemCache> itemCaches = new HashMap<>();
         //noinspection rawtypes
         itemCaches.put("nowShowing", new MusicItemCache(view.itemsPerPage()));
-        this.commandProvider = new CommandProvider(view, authSpotifyService, musicSpotifyService, itemCaches);
+        this.commandService = new CommandServiceImpl(view, authSpotifyService, musicSpotifyService, itemCaches);
         this.view = Objects.requireNonNull(view);
     }
 
@@ -56,31 +53,31 @@ public class CommandController {
             switch (commandString.toUpperCase()
                     .split("\\s")[0]) {
                 case "AUTH":
-                    command = commandProvider.provideAuthCommand();
+                    command = commandService.provideAuthCommand();
                     break;
 
                 case "NEW":
-                    command = commandProvider.provideNewAlbumsCommand();
+                    command = commandService.provideNewAlbumsCommand();
                     break;
 
                 case "FEATURED":
-                    command = commandProvider.provideFeaturedPlaylistsCommand();
+                    command = commandService.provideFeaturedPlaylistsCommand();
                     break;
 
                 case "CATEGORIES":
-                    command = commandProvider.provideCategoriesCommand();
+                    command = commandService.provideCategoriesCommand();
                     break;
 
                 case "PLAYLISTS":
-                    command = commandProvider.provideCategoryPlaylistsCommand(commandString);
+                    command = commandService.provideCategoryPlaylistsCommand(commandString);
                     break;
 
                 case "NEXT":
-                    command = commandProvider.provideNextPageCommand();
+                    command = commandService.provideNextPageCommand();
                     break;
 
                 case "PREV":
-                    command = commandProvider.providePrevPageCommand();
+                    command = commandService.providePrevPageCommand();
                     break;
 
                 case "EXIT":
@@ -88,7 +85,7 @@ public class CommandController {
                     return;
 
                 default:
-                    command = commandProvider.provideInvalidCommand();
+                    command = commandService.provideInvalidCommand();
             }
             command.execute();
 

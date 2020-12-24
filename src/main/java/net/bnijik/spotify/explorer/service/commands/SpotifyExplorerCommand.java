@@ -1,4 +1,4 @@
-package net.bnijik.spotify.explorer.commands;
+package net.bnijik.spotify.explorer.service.commands;
 
 /**
  * A supertype of all {@code Command}s of this app. <br>
