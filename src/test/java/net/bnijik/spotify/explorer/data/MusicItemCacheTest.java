@@ -1,6 +1,5 @@
-package net.bnijik.spotify.explorer;
+package net.bnijik.spotify.explorer.data;
 
-import net.bnijik.spotify.explorer.data.MusicItemCache;
 import net.bnijik.spotify.explorer.model.Album;
 import net.bnijik.spotify.explorer.model.MusicItem;
 import org.junit.jupiter.api.DisplayName;
