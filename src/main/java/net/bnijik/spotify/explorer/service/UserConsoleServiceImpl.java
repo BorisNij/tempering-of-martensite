@@ -25,7 +25,9 @@ public class UserConsoleServiceImpl implements UserConsoleService, AutoCloseable
     }
 
     public UserConsoleServiceImpl(@Value("${app.items-per-page}") int itemsPerPage) {
-        this.itemsPerPage = itemsPerPage;
+        this.itemsPerPage = itemsPerPage < UserConsoleService.MINIMUM_ITEMS_PER_PAGE
+                ? UserConsoleService.DEFAULT_ITEMS_PER_PAGE
+                : itemsPerPage;
     }
 
     @Override
