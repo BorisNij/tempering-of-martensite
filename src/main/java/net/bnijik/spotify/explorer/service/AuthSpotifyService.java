@@ -12,4 +12,8 @@ public interface AuthSpotifyService {
     boolean manageToGetAccessToken();
 
     String authUri();
+
+    boolean isAuthorized();
+
+    String getAccessToken();
 }

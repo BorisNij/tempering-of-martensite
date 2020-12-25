@@ -1,18 +1,18 @@
 package net.bnijik.spotify.explorer.service.commands;
 
 import net.bnijik.spotify.explorer.data.MusicItemCache;
-import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.AuthSpotifyService;
 import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.Map;
 
 public class NextPageCommand implements SpotifyExplorerCommand {
-    private final AuthSpotifyServiceImpl authSpotifyService;
+    private final AuthSpotifyService authSpotifyService;
     private final UserConsoleService view;
     @SuppressWarnings("rawtypes")
     private final Map<String, MusicItemCache> itemCaches;
 
-    public NextPageCommand(AuthSpotifyServiceImpl authSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
+    public NextPageCommand(AuthSpotifyService authSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
         this.authSpotifyService = authSpotifyService;
         this.view = view;
         this.itemCaches = itemCaches;

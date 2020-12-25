@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import java.net.http.HttpRequest;
+import java.net.http.HttpClient;
 
 @Configuration
 @ComponentScan("net.bnijik.spotify.explorer")
@@ -13,7 +13,7 @@ import java.net.http.HttpRequest;
 public class SpringConfiguration {
 
     @Bean
-    public HttpRequest.Builder getHttpRequestBuilder() {
-        return HttpRequest.newBuilder();
+    public HttpClient.Builder getHttpClientBuilder() {
+        return HttpClient.newBuilder();
     }
 }

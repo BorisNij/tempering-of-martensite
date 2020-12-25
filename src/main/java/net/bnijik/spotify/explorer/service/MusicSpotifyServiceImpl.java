@@ -32,13 +32,15 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     private final SpotifyResponseParser<String> responseParser;
     private final MusicSpotifyConfig musicSpotifyConfig;
+    private final HttpClient.Builder httpClientBuilder;
     private final HttpRequest.Builder httpRequestBuilder;
 
     @Autowired
-    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, MusicSpotifyConfig musicSpotifyConfig, HttpRequest.Builder httpRequestBuilder) {
+    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, MusicSpotifyConfig musicSpotifyConfig, HttpClient.Builder httpClientBuilder) {
         this.responseParser = responseParser;
         this.musicSpotifyConfig = musicSpotifyConfig;
-        this.httpRequestBuilder = httpRequestBuilder;
+        this.httpClientBuilder = httpClientBuilder;
+        this.httpRequestBuilder = HttpRequest.newBuilder();
     }
 
     @Override
@@ -85,7 +87,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
                 .build();
 
         try {
-            HttpClient client = HttpClient.newBuilder()
+            HttpClient client = httpClientBuilder
                     .build();
             HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 

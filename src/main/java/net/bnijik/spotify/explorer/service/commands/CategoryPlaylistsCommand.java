@@ -3,21 +3,21 @@ package net.bnijik.spotify.explorer.service.commands;
 import net.bnijik.spotify.explorer.data.MusicItemCache;
 import net.bnijik.spotify.explorer.model.Category;
 import net.bnijik.spotify.explorer.model.Playlist;
-import net.bnijik.spotify.explorer.service.AuthSpotifyServiceImpl;
+import net.bnijik.spotify.explorer.service.AuthSpotifyService;
 import net.bnijik.spotify.explorer.service.MusicSpotifyService;
 import net.bnijik.spotify.explorer.service.UserConsoleService;
 
 import java.util.Map;
 
 public class CategoryPlaylistsCommand implements SpotifyExplorerCommand {
-    private final AuthSpotifyServiceImpl authSpotifyService;
+    private final AuthSpotifyService authSpotifyService;
     private final MusicSpotifyService musicSpotifyService;
     private final UserConsoleService view;
     private final String commandString;
     @SuppressWarnings("rawtypes")
     private final Map<String, MusicItemCache> itemCaches;
 
-    public CategoryPlaylistsCommand(AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches, String commandString) {
+    public CategoryPlaylistsCommand(AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService, UserConsoleService view, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches, String commandString) {
         this.authSpotifyService = authSpotifyService;
         this.musicSpotifyService = musicSpotifyService;
         this.view = view;

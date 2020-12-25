@@ -40,15 +40,19 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
     private final SpotifyResponseParser<String> responseParser;
     private final AuthSpotifyConfig authSpotifyConfig;
+    private final HttpClient.Builder httpClientBuilder;
+    private final HttpRequest.Builder httpRequestBuilder;
 
     private String accessToken = "";
     private String accessCode = "";
     private HttpServer server;
 
     @Autowired
-    public AuthSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, AuthSpotifyConfig authSpotifyConfig) {
+    public AuthSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, AuthSpotifyConfig authSpotifyConfig, HttpClient.Builder httpClientBuilder) {
         this.responseParser = responseParser;
         this.authSpotifyConfig = authSpotifyConfig;
+        this.httpClientBuilder = httpClientBuilder;
+        this.httpRequestBuilder = HttpRequest.newBuilder();
     }
 
     @Override
@@ -124,7 +128,7 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
 
         String uri = authSpotifyConfig.getBaseUri() + authSpotifyConfig.getTokenPath();
 
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest request = httpRequestBuilder
                 .header("Content-type", "application/x-www-form-urlencoded")
                 .uri(URI.create(uri))
                 .POST(HttpRequest.BodyPublishers.ofString("&client_id=" + authSpotifyConfig.getClientId()
@@ -135,7 +139,7 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
                 .build();
 
         try {
-            HttpClient client = HttpClient.newBuilder()
+            HttpClient client = httpClientBuilder
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -155,10 +159,12 @@ public class AuthSpotifyServiceImpl implements AuthSpotifyService {
         return true;
     }
 
+    @Override
     public boolean isAuthorized() {
         return accessToken != null && !accessToken.isBlank();
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

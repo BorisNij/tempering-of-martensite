@@ -1,10 +1,10 @@
 package net.bnijik.spotify.explorer.controller;
 
 import net.bnijik.spotify.explorer.data.MusicItemCache;
-import net.bnijik.spotify.explorer.service.*;
-import net.bnijik.spotify.explorer.service.commands.NextPageCommand;
-import net.bnijik.spotify.explorer.service.commands.PrevPageCommand;
-import net.bnijik.spotify.explorer.service.commands.SpotifyExplorerCommand;
+import net.bnijik.spotify.explorer.service.AuthSpotifyService;
+import net.bnijik.spotify.explorer.service.MusicSpotifyService;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
+import net.bnijik.spotify.explorer.service.commands.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,22 +24,29 @@ import java.util.Objects;
  *     <li> A <i>now-showing</i> MusicItemCache entry in the hash map holding the cache that currently
  *          presents its items to the user. The {@link NextPageCommand} and
  *          {@link PrevPageCommand} update the {@code MusicItemPage} of this cache</li>
- *     <li> A {@link SpotifyExplorerCommandService}</li>
  * </ul>
  */
 @Component
 public class CommandController {
     private final UserConsoleService view;
-    private final CommandService<SpotifyExplorerCommand> commandService;
+    private final AuthSpotifyService authSpotifyService;
+    private final MusicSpotifyService musicSpotifyService;
+
+    @SuppressWarnings("rawtypes")
+    private final Map<String, MusicItemCache> itemCacheMap;
+    private final Map<String, SpotifyExplorerCommand> commandMap;
+
 
     @Autowired
-    public CommandController(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService) {
-        //noinspection rawtypes
-        Map<String, MusicItemCache> itemCaches = new HashMap<>();
-        //noinspection rawtypes
-        itemCaches.put("nowShowing", new MusicItemCache(view.itemsPerPage()));
-        this.commandService = new SpotifyExplorerCommandService(view, authSpotifyService, musicSpotifyService, itemCaches);
+    public CommandController(UserConsoleService view, AuthSpotifyService authSpotifyService, MusicSpotifyService musicSpotifyService) {
+        this.authSpotifyService = Objects.requireNonNull(authSpotifyService);
+        this.musicSpotifyService = Objects.requireNonNull(musicSpotifyService);
         this.view = Objects.requireNonNull(view);
+
+        this.commandMap = new HashMap<>();
+        this.itemCacheMap = new HashMap<>();
+        //noinspection rawtypes
+        itemCacheMap.put("nowShowing", new MusicItemCache(view.itemsPerPage()));
     }
 
     public void start() {
@@ -54,31 +61,31 @@ public class CommandController {
 
             switch (commandStrings[0]) {
                 case "AUTH":
-                    command = commandService.provideAuthCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (authCommand) -> new AuthCommand(authSpotifyService, view));
                     break;
 
                 case "NEW":
-                    command = commandService.provideNewAlbumsCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (newAlbumsCommand) -> new NewAlbumsCommand(authSpotifyService, musicSpotifyService, view, itemCacheMap));
                     break;
 
                 case "FEATURED":
-                    command = commandService.provideFeaturedPlaylistsCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (featuredPlaylistsCommand) -> new FeaturedPlaylistsCommand(authSpotifyService, musicSpotifyService, view, itemCacheMap));
                     break;
 
                 case "CATEGORIES":
-                    command = commandService.provideCategoriesCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (categoriesCommand) -> new CategoriesCommand(authSpotifyService, musicSpotifyService, view, itemCacheMap));
                     break;
 
                 case "PLAYLISTS":
-                    command = commandService.provideCategoryPlaylistsCommand(commandString);
+                    command = commandMap.computeIfAbsent(commandString, (categoryPlaylistsCommand) -> new CategoryPlaylistsCommand(authSpotifyService, musicSpotifyService, view, itemCacheMap, commandString));
                     break;
 
                 case "NEXT":
-                    command = commandService.provideNextPageCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (nextPageCommand) -> new NextPageCommand(authSpotifyService, view, itemCacheMap));
                     break;
 
                 case "PREV":
-                    command = commandService.providePrevPageCommand(commandStrings[0]);
+                    command = commandMap.computeIfAbsent(commandStrings[0], (prevPageCommand) -> new PrevPageCommand(authSpotifyService, view, itemCacheMap));
                     break;
 
                 case "EXIT":
@@ -86,7 +93,7 @@ public class CommandController {
                     return;
 
                 default:
-                    command = commandService.provideInvalidCommand("INVALID");
+                    command = () -> view.errorMsg("Invalid command. Please try again.");
             }
             command.execute();
 
