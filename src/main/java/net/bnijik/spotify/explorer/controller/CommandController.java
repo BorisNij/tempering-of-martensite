@@ -24,13 +24,13 @@ import java.util.Objects;
  *     <li> A <i>now-showing</i> MusicItemCache entry in the hash map holding the cache that currently
  *          presents its items to the user. The {@link NextPageCommand} and
  *          {@link PrevPageCommand} update the {@code MusicItemPage} of this cache</li>
- *     <li> A {@link CommandServiceImpl}</li>
+ *     <li> A {@link SpotifyExplorerCommandProvider}</li>
  * </ul>
  */
 @Component
 public class CommandController {
     private final UserConsoleService view;
-    private final CommandService commandService;
+    private final CommandProvider<SpotifyExplorerCommand> commandProvider;
 
     @Autowired
     public CommandController(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService) {
@@ -38,7 +38,7 @@ public class CommandController {
         Map<String, MusicItemCache> itemCaches = new HashMap<>();
         //noinspection rawtypes
         itemCaches.put("nowShowing", new MusicItemCache(view.itemsPerPage()));
-        this.commandService = new CommandServiceImpl(view, authSpotifyService, musicSpotifyService, itemCaches);
+        this.commandProvider = new SpotifyExplorerCommandProvider(view, authSpotifyService, musicSpotifyService, itemCaches);
         this.view = Objects.requireNonNull(view);
     }
 
@@ -48,36 +48,37 @@ public class CommandController {
         SpotifyExplorerCommand command;
 
         while (true) {
-            String commandString = view.getUserCommandString();
+            final String commandString = view.getUserCommandString();
+            final String[] commandStrings = commandString.toUpperCase()
+                    .split("\\s");
 
-            switch (commandString.toUpperCase()
-                    .split("\\s")[0]) {
+            switch (commandStrings[0]) {
                 case "AUTH":
-                    command = commandService.provideAuthCommand();
+                    command = commandProvider.provideAuthCommand(commandStrings[0]);
                     break;
 
                 case "NEW":
-                    command = commandService.provideNewAlbumsCommand();
+                    command = commandProvider.provideNewAlbumsCommand(commandStrings[0]);
                     break;
 
                 case "FEATURED":
-                    command = commandService.provideFeaturedPlaylistsCommand();
+                    command = commandProvider.provideFeaturedPlaylistsCommand(commandStrings[0]);
                     break;
 
                 case "CATEGORIES":
-                    command = commandService.provideCategoriesCommand();
+                    command = commandProvider.provideCategoriesCommand(commandStrings[0]);
                     break;
 
                 case "PLAYLISTS":
-                    command = commandService.provideCategoryPlaylistsCommand(commandString);
+                    command = commandProvider.provideCategoryPlaylistsCommand(commandString);
                     break;
 
                 case "NEXT":
-                    command = commandService.provideNextPageCommand();
+                    command = commandProvider.provideNextPageCommand(commandStrings[0]);
                     break;
 
                 case "PREV":
-                    command = commandService.providePrevPageCommand();
+                    command = commandProvider.providePrevPageCommand(commandStrings[0]);
                     break;
 
                 case "EXIT":
@@ -85,7 +86,7 @@ public class CommandController {
                     return;
 
                 default:
-                    command = commandService.provideInvalidCommand();
+                    command = commandProvider.provideInvalidCommand("INVALID");
             }
             command.execute();
 

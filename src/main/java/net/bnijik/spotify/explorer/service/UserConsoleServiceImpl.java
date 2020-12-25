@@ -65,7 +65,8 @@ public class UserConsoleServiceImpl implements UserConsoleService, AutoCloseable
     public String getUserCommandString() {
         System.out.println();
         System.out.print("> ");
-        return scanner.nextLine();
+        final String commandString = scanner.nextLine();
+        return commandString == null ? "" : commandString;
     }
 
     @Override

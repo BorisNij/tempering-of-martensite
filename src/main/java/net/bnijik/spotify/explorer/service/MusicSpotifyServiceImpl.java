@@ -32,11 +32,13 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
 
     private final SpotifyResponseParser<String> responseParser;
     private final MusicSpotifyConfig musicSpotifyConfig;
+    private final HttpRequest.Builder httpRequestBuilder;
 
     @Autowired
-    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, MusicSpotifyConfig musicSpotifyConfig) {
+    public MusicSpotifyServiceImpl(SpotifyResponseParser<String> responseParser, MusicSpotifyConfig musicSpotifyConfig, HttpRequest.Builder httpRequestBuilder) {
         this.responseParser = responseParser;
         this.musicSpotifyConfig = musicSpotifyConfig;
+        this.httpRequestBuilder = httpRequestBuilder;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class MusicSpotifyServiceImpl implements MusicSpotifyService {
     }
 
     private String getJson(String uri, String accessToken) {
-        HttpRequest httpRequest = HttpRequest.newBuilder()
+        HttpRequest httpRequest = httpRequestBuilder
                 .header("Authorization", "Bearer " + accessToken)
                 .uri(URI.create(uri))
                 .GET()
