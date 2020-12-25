@@ -1,6 +1,7 @@
 package net.bnijik.spotify.explorer.data;
 
 import net.bnijik.spotify.explorer.model.MusicItem;
+import net.bnijik.spotify.explorer.service.UserConsoleService;
 import net.bnijik.spotify.explorer.service.commands.CategoriesCommand;
 import net.bnijik.spotify.explorer.service.commands.CategoryPlaylistsCommand;
 import net.bnijik.spotify.explorer.service.commands.FeaturedPlaylistsCommand;
@@ -24,23 +25,21 @@ import java.util.stream.Collectors;
  * {@link FeaturedPlaylistsCommand} and <br>
  * {@link CategoryPlaylistsCommand}
  *
- * @param <T> bound by Album, Category or Playlist types.
+ * @param <ItemType> bound by Album, Category or Playlist types.
  */
-public class MusicItemCache<T extends MusicItem> {
+public class MusicItemCache<ItemType extends MusicItem> {
 
     // shared empty MusicItemPage instance used for empty instances
     @SuppressWarnings("rawtypes")
     private static final MusicItemPage EMPTY_MUSIC_ITEM_PAGE = new EmptyMusicItemPage();
-    private static final int DEFAULT_ITEMS_PER_PAGE = 5;
-    private static final int MINIMUM_ITEMS_PER_PAGE = 1;
 
-    private List<T> musicItems;
-    private final MusicItemPage<T> page;
+    private List<ItemType> musicItems;
+    private final MusicItemPage<ItemType> page;
     private final int itemsPerPage;
 
     public MusicItemCache(int itemsPerPage) {
-        this.itemsPerPage = itemsPerPage < MINIMUM_ITEMS_PER_PAGE
-                ? DEFAULT_ITEMS_PER_PAGE
+        this.itemsPerPage = itemsPerPage < UserConsoleService.MINIMUM_ITEMS_PER_PAGE
+                ? UserConsoleService.DEFAULT_ITEMS_PER_PAGE
                 : itemsPerPage;
         this.musicItems = new ArrayList<>();
         this.page = new MusicItemPage<>();
@@ -68,11 +67,11 @@ public class MusicItemCache<T extends MusicItem> {
         return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
     }
 
-    public List<T> getItems() {
+    public List<ItemType> getItems() {
         return musicItems;
     }
 
-    public T getByName(String itemName) {
+    public ItemType getByName(String itemName) {
         return musicItems.stream()
                 .filter(item -> item.description()
                         .contains(itemName))
@@ -80,7 +79,7 @@ public class MusicItemCache<T extends MusicItem> {
                 .orElse(null);
     }
 
-    public void setItems(List<T> musicItems) {
+    public void setItems(List<ItemType> musicItems) {
         if (musicItems == null || musicItems.isEmpty()) {
             return;
         }
@@ -89,10 +88,10 @@ public class MusicItemCache<T extends MusicItem> {
         page.lastPage = calcLastPage();
     }
 
-    public MusicItemPage<T> currentPage() {
+    public MusicItemPage<ItemType> currentPage() {
         if (musicItems.isEmpty()) {
             //noinspection unchecked
-            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
+            return (MusicItemPage<ItemType>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
         if (page.items == null) {
@@ -101,10 +100,10 @@ public class MusicItemCache<T extends MusicItem> {
         return page;
     }
 
-    public MusicItemPage<T> nextPage() {
+    public MusicItemPage<ItemType> nextPage() {
         if (musicItems.isEmpty()) {
             //noinspection unchecked
-            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
+            return (MusicItemPage<ItemType>) EMPTY_MUSIC_ITEM_PAGE;
         }
 
         if (page.items == null) {
@@ -113,7 +112,7 @@ public class MusicItemCache<T extends MusicItem> {
 
         if (page.currentPage == page.lastPage) {
             //noinspection unchecked
-            return (MusicItemPage<T>) EMPTY_MUSIC_ITEM_PAGE;
+            return (MusicItemPage<ItemType>) EMPTY_MUSIC_ITEM_PAGE;
         } else {
             page.lastShownItem += itemsPerPage;
             page.currentPage++;
@@ -122,7 +121,7 @@ public class MusicItemCache<T extends MusicItem> {
         }
     }
 
-    public MusicItemPage<T> prevPage() {
+    public MusicItemPage<ItemType> prevPage() {
         if (musicItems.isEmpty()) {
             //noinspection unchecked
             return EMPTY_MUSIC_ITEM_PAGE;

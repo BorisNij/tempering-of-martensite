@@ -10,7 +10,7 @@ import java.util.Map;
  * {@link SpotifyExplorerCommand} and puts in the hash map if the {@code Command} was
  * called for the first time.
  */
-public class SpotifyExplorerCommandProvider extends CommandProvider<SpotifyExplorerCommand> {
+public class SpotifyExplorerCommandService extends CommandService<SpotifyExplorerCommand> {
     private final UserConsoleService view;
     private final AuthSpotifyServiceImpl authSpotifyService;
     private final MusicSpotifyService musicSpotifyService;
@@ -18,7 +18,7 @@ public class SpotifyExplorerCommandProvider extends CommandProvider<SpotifyExplo
     @SuppressWarnings("rawtypes")
     private final Map<String, MusicItemCache> itemCaches;
 
-    public SpotifyExplorerCommandProvider(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
+    public SpotifyExplorerCommandService(UserConsoleService view, AuthSpotifyServiceImpl authSpotifyService, MusicSpotifyService musicSpotifyService, @SuppressWarnings("rawtypes") Map<String, MusicItemCache> itemCaches) {
         this.view = view;
         this.authSpotifyService = authSpotifyService;
         this.musicSpotifyService = musicSpotifyService;
