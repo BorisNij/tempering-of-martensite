@@ -14,6 +14,13 @@ application.yml).
 
 - [Git Repository and Default Branch Names](#git-repository-and-default-branch-names)
 - [System Requirements to Build the Application](#system-requirements-to-build-the-application)
+- [Technologies Used](#technologies-used)
+- [To Build](#to-build)
+- [To Run Tests](#to-run-tests]
+- [To Run the Application from Command Line](#to-run-the-application-from-command-line)
+- [Configuration](#Configuration)
+- [Running Example](#running-example)
+- [Testing](#testing)
 
 </details>
 
@@ -110,7 +117,7 @@ spotify.music.new-albums-path|/browse/new-releases|Path for requesting a list of
 spotify.music.featured-path|/browse/featured-playlists|Path for requesting a list of featured playlists on Spotify|Appended to spotify.music.base-uri
 spotify.music.query|?limit=50|Maximum number of items to request from Spotify (i.e. the maximum size of the obtained list)|Optional property. If omitted, Spotify will return up to 20 items|
 
-## Running example
+## Running Example
 
 ```
 Greetings! :)
