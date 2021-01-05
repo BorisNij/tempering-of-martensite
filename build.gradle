@@ -12,6 +12,16 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.bnijik.spotify.explorer.SpotifyExplorer'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
