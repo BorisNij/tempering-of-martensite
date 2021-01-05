@@ -16,7 +16,7 @@ application.yml).
 - [System Requirements to Build the Application](#system-requirements-to-build-the-application)
 - [Technologies Used](#technologies-used)
 - [To Build](#to-build)
-- [To Run Tests](#to-run-tests]
+- [To Run Tests](#to-run-tests)
 - [To Run the Application from Command Line](#to-run-the-application-from-command-line)
 - [Configuration](#Configuration)
 - [Running Example](#running-example)
