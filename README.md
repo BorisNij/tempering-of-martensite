@@ -10,8 +10,10 @@ Item lists recieved from Spotify are presented to the user using the standard ou
 scrollable "pages" containing a pre-set numer of items per page (default number of items per page = 5, see
 application.yml).
 
-## Table of Contents
+<details> Table of Contents
+
 - [Git Repository and Default Branch Names](#git-repository-and-default-branch-names)
+</details>
 
 ## Git Repository and Default Branch Names
 
