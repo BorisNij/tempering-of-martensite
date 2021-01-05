@@ -12,7 +12,7 @@ application.yml).
 
 <details>
 <summary> Table of Contents </summary>
-- [Git Repository and Default Branch Names](#git-repository-and-default-branch-names)
+- [Git Repository and Default Branch Names](README.md#git-repository-and-default-branch-names)
 </details>
 
 ## Git Repository and Default Branch Names
