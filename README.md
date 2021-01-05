@@ -122,7 +122,7 @@ Authentication completed!
 
 > featured
 Sweet Soul Chillout
-https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0
+[https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0](https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0)
 
 Lo-Fi Beats
 https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn
@@ -207,5 +207,5 @@ Bye bye!
 ## Testing
 
 Unit tests for the pagination mechanism and music fetching service are available in
-their [respective packages] (https://github.com/BorisNij/tempering-of-martensite/tree/prime/src/test/java/net/bnijik/spotify/explorer)
+their [respective packages](https://github.com/BorisNij/tempering-of-martensite/tree/prime/src/test/java/net/bnijik/spotify/explorer)
 .
