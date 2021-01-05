@@ -207,5 +207,5 @@ Bye bye!
 ## Testing
 
 Unit tests for the pagination mechanism and music fetching service are available in
-their [respective packages] (https://github.com/BorisNij/tempering-of-martensite/tree/prime/src/test/java/net/bnijik/spotify/explorer)
+their [respective packages](https://github.com/BorisNij/tempering-of-martensite/tree/prime/src/test/java/net/bnijik/spotify/explorer)
 .
