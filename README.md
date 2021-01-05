@@ -12,7 +12,7 @@ application.yml).
 
 <details>
 <summary> Table of Contents </summary>
-- [Git Repository and Default Branch Names](README.md#git-repository-and-default-branch-names)
+- [Git Repository and Default Branch Names](https://github.com/BorisNij/tempering-of-martensite/README.md#git-repository-and-default-branch-names)
 </details>
 
 ## Git Repository and Default Branch Names
@@ -210,5 +210,4 @@ Bye bye!
 ## Testing
 
 Unit tests for the pagination mechanism and music fetching service are available in
-their [respective packages](https://github.com/BorisNij/tempering-of-martensite/tree/prime/src/test/java/net/bnijik/spotify/explorer)
-.
+their [respective packages](src/test/java/net/bnijik/spotify/explorer).
