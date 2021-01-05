@@ -10,9 +10,11 @@ Item lists recieved from Spotify are presented to the user using the standard ou
 scrollable "pages" containing a pre-set numer of items per page (default number of items per page = 5, see
 application.yml).
 
-<details> <summary><h2> Table of Contents </h2> </summary>
+<details><summary> Table of Contents </summary>
 
 - [Git Repository and Default Branch Names](#git-repository-and-default-branch-names)
+- [System Requirements to Build the Application](#system-requirements-to-build-the-application)
+
 </details>
 
 ## Git Repository and Default Branch Names
@@ -22,7 +24,7 @@ interested in minimizing its searchability through general search. Google isn't 
 master' and 'main', that's why my only branch has been called 'prime'. I also named the repository itself with a name
 that is unrelated to the functionality or purpose of the app.
 
-## System Requirements to Build the Application:
+## System Requirements to Build the Application
 
 - JDK 11+
 - Internet Access (for downloading dependencies by Gradle and accessing Spotify's endpoints)
