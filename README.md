@@ -92,9 +92,9 @@ Property|Default Value|Description|Notes
 app.items-per-page|5|Number of music items to display on each console output "page"| In total, up to 50 items are queried from Spotify. The obtained list of items is split into sublists, each containing 5 items.| 
 server.port|9090|localhost port to which Spotify's OAuth service sends an Access Token| This value must be identical to the one set in the Spotify developer dashboard|
 server.context-path|/|localhost path to which Spotify's OAuth service sends an Access Token|This value must be identical to the one set in the Spotify Developer Dashboard|
-spotify.auth.client-id|_see
+spotify.auth.client-id|_see application.yml_
 application.yml_|Client id for authenticating the app via Spotify's OAuth service| This value must be identical to that of Spotify Developer account|
-spotify.auth.client-secret|_see
+spotify.auth.client-secret|_see application.yml_
 application.yml_|Client secret for authenticating the app via Spotify's OAuth service| This value must be identical to that of Spotify Developer account|
 spotify.auth.base-uri|https://accounts.spotify.com|Spotify's OAuth endpoint||
 spotify.auth.redirect-base-uri|http://localhost|uri where Spotify's OAuth service redirects user's browser after obtaining response to an Access Token request|This value must be identical to the one set in the Spotify Developer Dashboard
@@ -122,7 +122,7 @@ Authentication completed!
 
 > featured
 Sweet Soul Chillout
-[https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0](https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0)
+https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0
 
 Lo-Fi Beats
 https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn
