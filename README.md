@@ -122,7 +122,7 @@ Authentication completed!
 
 > featured
 Sweet Soul Chillout
-https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0
+[https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0](https://open.spotify.com/playlist/37i9dQZF1DXbcgQ8d7s0A0)
 
 Lo-Fi Beats
 https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn
