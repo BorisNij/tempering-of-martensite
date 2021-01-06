@@ -1,40 +1,41 @@
+<details><summary> 𝑻𝒂𝒃𝒍𝒆 𝒐𝒇 𝑪𝒐𝒏𝒕𝒆𝒏𝒕𝒔 </summary>
+
+- [𝘎𝘪𝘵 𝘙𝘦𝘱𝘰𝘴𝘪𝘵𝘰𝘳𝘺 𝘢𝘯𝘥 𝘋𝘦𝘧𝘢𝘶𝘭𝘵 𝘉𝘳𝘢𝘯𝘤𝘩 𝘕𝘢𝘮𝘦𝘴](#git-repository-and-default-branch-names)
+- [𝘚𝘺𝘴𝘵𝘦𝘮 𝘙𝘦𝘲𝘶𝘪𝘳𝘦𝘮𝘦𝘯𝘵𝘴 𝘵𝘰 𝘉𝘶𝘪𝘭𝘥 𝘵𝘩𝘦 𝘈𝘱𝘱𝘭𝘪𝘤𝘢𝘵𝘪𝘰𝘯](#system-requirements-to-build-the-application)
+- [𝘛𝘦𝘤𝘩𝘯𝘰𝘭𝘰𝘨𝘪𝘦𝘴 𝘜𝘴𝘦𝘥](#technologies-used)
+- [𝘛𝘰 𝘉𝘶𝘪𝘭𝘥](#to-build)
+- [𝘛𝘰 𝘙𝘶𝘯 𝘛𝘦𝘴𝘵𝘴](#to-run-tests)
+- [𝘛𝘰 𝘙𝘶𝘯 𝘵𝘩𝘦 𝘈𝘱𝘱𝘭𝘪𝘤𝘢𝘵𝘪𝘰𝘯 𝘧𝘳𝘰𝘮 𝘊𝘰𝘮𝘮𝘢𝘯𝘥 𝘓𝘪𝘯𝘦](#to-run-the-application-from-command-line)
+- [𝘊𝘰𝘯𝘧𝘪𝘨𝘶𝘳𝘢𝘵𝘪𝘰𝘯](#Configuration)
+- [𝘙𝘶𝘯𝘯𝘪𝘯𝘨 𝘌𝘹𝘢𝘮𝘱𝘭𝘦](#running-example)
+- [𝘛𝘦𝘴𝘵𝘪𝘯𝘨](#testing)
+- [𝘛𝘰-𝘥𝘰](#to-do)
+
+</details>
+
+---
+
 # Spotify Explorer
 
 This is a command line Spotify client. The application consumes Spotify's REST API to fetch lists of the following
 Spotify music items: new album releases, featured playlists, music categories and lastly their playlists.
-Correspondingly, supported user input strings (i.e. user commands) include 'new', 'featured', 'categories' and, for
-example, 'playlists Rock'.
-'Rock' can be replaced by any other category obtained using the 'categories' command.
+Correspondingly, supported user input strings (i.e. user commands) include `new`, `featured`, `categories` and, for
+example, `playlists Rock`. `Rock` can be replaced by any other category obtained using the `categories` command.
 
 Item lists recieved from Spotify are presented to the user using the standard output. The lists are split into
 scrollable "pages" containing a pre-set numer of items per page (default number of items per page = 5, see
 application.yml).
 
-<details><summary> Table of Contents </summary>
-
-- [Git Repository and Default Branch Names](#git-repository-and-default-branch-names)
-- [System Requirements to Build the Application](#system-requirements-to-build-the-application)
-- [Technologies Used](#technologies-used)
-- [To Build](#to-build)
-- [To Run Tests](#to-run-tests)
-- [To Run the Application from Command Line](#to-run-the-application-from-command-line)
-- [Configuration](#Configuration)
-- [Running Example](#running-example)
-- [Testing](#testing)
-
-</details>
-
 ## Git Repository and Default Branch Names
 
 I wanted to store my app in a public GitHub repository for easy sharing with reviewers. At the same time, I was
-interested in minimizing its searchability through general search. Google isn't expected to index branches other than '
-master' and 'main', that's why my only branch has been called 'prime'. I also named the repository itself with a name
-that is unrelated to the functionality or purpose of the app.
+interested in minimizing its searchability through general search. Google isn't expected to index branches other than `master` and `main`, that's why my only branch is called `prime`. I also named the repository itself with a name
+that is unrelated to the functionality or purpose of this app.
 
 ## System Requirements to Build the Application
 
 - JDK 11+
-- Internet Access (for downloading dependencies by Gradle and accessing Spotify's endpoints)
+- Internet Access (for downloading dependencies by Gradle)
 - Writable application's directory (for build artifacts)
 
 ## Technologies Used
@@ -220,3 +221,11 @@ Bye bye!
 
 Unit tests for the pagination mechanism and music fetching service are available in
 their [respective packages](src/test/java/net/bnijik/spotify/explorer).
+
+
+## To-do
+
+- [x] Update README.md
+- [ ] Nest tests in CacheTest
+- [ ] Load JSON arrays from test\resources files in SpotifyResponseParserImplTest
+- [ ] Update JavaDoc comments
