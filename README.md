@@ -1,4 +1,4 @@
-<details><summary> **_Table of Contents_** </summary>
+<details><summary> 𝙏𝙖𝙗𝙡𝙚 𝙤𝙛 𝘾𝙤𝙣𝙩𝙚𝙣𝙩𝙨 </summary>
 
 - [**_Git Repository and Default Branch Names_**](#git-repository-and-default-branch-names)
 - [**_System Requirements to Build the Application_**](#system-requirements-to-build-the-application)
