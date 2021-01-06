@@ -1,15 +1,15 @@
-<details><summary> 𝑻𝒂𝒃𝒍𝒆 𝒐𝒇 𝑪𝒐𝒏𝒕𝒆𝒏𝒕𝒔 </summary>
+<details><summary> **_Table of Contents_** </summary>
 
-- [𝘎𝘪𝘵 𝘙𝘦𝘱𝘰𝘴𝘪𝘵𝘰𝘳𝘺 𝘢𝘯𝘥 𝘋𝘦𝘧𝘢𝘶𝘭𝘵 𝘉𝘳𝘢𝘯𝘤𝘩 𝘕𝘢𝘮𝘦𝘴](#git-repository-and-default-branch-names)
-- [𝘚𝘺𝘴𝘵𝘦𝘮 𝘙𝘦𝘲𝘶𝘪𝘳𝘦𝘮𝘦𝘯𝘵𝘴 𝘵𝘰 𝘉𝘶𝘪𝘭𝘥 𝘵𝘩𝘦 𝘈𝘱𝘱𝘭𝘪𝘤𝘢𝘵𝘪𝘰𝘯](#system-requirements-to-build-the-application)
-- [𝘛𝘦𝘤𝘩𝘯𝘰𝘭𝘰𝘨𝘪𝘦𝘴 𝘜𝘴𝘦𝘥](#technologies-used)
-- [𝘛𝘰 𝘉𝘶𝘪𝘭𝘥](#to-build)
-- [𝘛𝘰 𝘙𝘶𝘯 𝘛𝘦𝘴𝘵𝘴](#to-run-tests)
-- [𝘛𝘰 𝘙𝘶𝘯 𝘵𝘩𝘦 𝘈𝘱𝘱𝘭𝘪𝘤𝘢𝘵𝘪𝘰𝘯 𝘧𝘳𝘰𝘮 𝘊𝘰𝘮𝘮𝘢𝘯𝘥 𝘓𝘪𝘯𝘦](#to-run-the-application-from-command-line)
-- [𝘊𝘰𝘯𝘧𝘪𝘨𝘶𝘳𝘢𝘵𝘪𝘰𝘯](#Configuration)
-- [𝘙𝘶𝘯𝘯𝘪𝘯𝘨 𝘌𝘹𝘢𝘮𝘱𝘭𝘦](#running-example)
-- [𝘛𝘦𝘴𝘵𝘪𝘯𝘨](#testing)
-- [𝘛𝘰-𝘥𝘰](#to-do)
+- [**_Git Repository and Default Branch Names_**](#git-repository-and-default-branch-names)
+- [**_System Requirements to Build the Application_**](#system-requirements-to-build-the-application)
+- [**_Technologies Used_**](#technologies-used)
+- [**_To Build_**](#to-build)
+- [**_To Run Tests_**](#to-run-tests)
+- [**_To Run the Application from the Command Line_**](#to-run-the-application-from-the-command-line)
+- [**_Configuration_**](#Configuration)
+- [**_Running Example_**](#running-example)
+- [**_Testing_**](#testing)
+- [**_To-do_**](#to-do)
 
 </details>
 
@@ -78,7 +78,7 @@ Run in the root directory of this project:
 gradlew test
 ```
 
-## To Run the Application from Command Line
+## To Run the Application from the Command Line
 
 Run in the root directory of this project:
 
@@ -107,15 +107,6 @@ Property|Default Value|Description|Notes
 app.items-per-page|5|Number of music items to display on each console output "page"| In total, up to 50 items are queried from Spotify. The obtained list of items is split into sublists, each containing 5 items.| 
 server.port|9090|localhost port to which Spotify's OAuth service sends an Access Token| This value must be identical to the one set in the Spotify developer dashboard|
 server.context-path|/|localhost path to which Spotify's OAuth service sends an Access Token|This value must be identical to the one set in the Spotify Developer Dashboard|
-spotify.auth.client-id|_see application.yml_|Client id for authenticating the app via Spotify's OAuth service| This value must be identical to that of Spotify Developer account|
-spotify.auth.client-secret|_see application.yml_|Client secret for authenticating the app via Spotify's OAuth service| This value must be identical to that of Spotify Developer account|
-spotify.auth.base-uri|https://accounts.spotify.com|Spotify's OAuth endpoint||
-spotify.auth.redirect-base-uri|http://localhost|uri where Spotify's OAuth service redirects user's browser after obtaining response to an Access Token request|This value must be identical to the one set in the Spotify Developer Dashboard
-spotify.auth.token-path|/api/token|Path for sending Access Token request|Appended to spotify.auth.base-uri|
-spotify.music.base-uri|https://api.spotify.com/v1|Spotify api endpoint for sending requests to obtain music items||
-spotify.music.categories-path|/browse/categories|Path for requesting a list of Spotify Categories|Appended to spotify.music.base-uri
-spotify.music.new-albums-path|/browse/new-releases|Path for requesting a list of new albums on Spotify|Appended to spotify.music.base-uri|
-spotify.music.featured-path|/browse/featured-playlists|Path for requesting a list of featured playlists on Spotify|Appended to spotify.music.base-uri
 spotify.music.query|?limit=50|Maximum number of items to request from Spotify (i.e. the maximum size of the obtained list)|Optional property. If omitted, Spotify will return up to 20 items|
 
 ## Running Example
