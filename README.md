@@ -217,6 +217,7 @@ their [respective packages](src/test/java/net/bnijik/spotify/explorer).
 ## To-do
 
 - [x] Update README.md
+- [ ] Move the instantiation of Command objects from CommandController into SpringConfiguration (use DI for commands)
 - [ ] Nest tests in CacheTest
 - [ ] Load JSON arrays from test\resources files in SpotifyResponseParserImplTest
 - [ ] Update JavaDoc comments
