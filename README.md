@@ -6,7 +6,7 @@
 - [**_To Build_**](#to-build)
 - [**_To Run Tests_**](#to-run-tests)
 - [**_To Run the Application from the Command Line_**](#to-run-the-application-from-the-command-line)
-- [**_Configuration_**](#Configuration)
+- [**_Configuration_**](#configuration)
 - [**_Running Example_**](#running-example)
 - [**_Testing_**](#testing)
 - [**_To-do_**](#to-do)
@@ -24,7 +24,7 @@ example, `playlists Rock`. `Rock` can be replaced by any other category obtained
 
 Item lists recieved from Spotify are presented to the user using the standard output. The lists are split into
 scrollable "pages" containing a pre-set numer of items per page (default number of items per page = 5, see
-application.yml).
+[configuration](#configuration) below).
 
 ## Git Repository and Default Branch Names
 
@@ -105,7 +105,7 @@ This default configurations can be updated in application.yml:
 Property|Default Value|Description|Notes
 ---|---|---|---
 app.items-per-page|5|Number of music items to display on each console output "page"| In total, up to 50 items are queried from Spotify. The obtained list of items is split into sublists, each containing 5 items.| 
-server.port|9090|localhost port to which Spotify's OAuth service sends an Access Token| This value must be identical to the one set in the Spotify developer dashboard|
+server.port|9090|localhost port to which Spotify's OAuth service sends an Access Token| This value must be identical to the one set in the Spotify Developer Dashboard|
 server.context-path|/|localhost path to which Spotify's OAuth service sends an Access Token|This value must be identical to the one set in the Spotify Developer Dashboard|
 spotify.music.query|?limit=50|Maximum number of items to request from Spotify (i.e. the maximum size of the obtained list)|Optional property. If omitted, Spotify will return up to 20 items|
 
